@@ -1,43 +1,4 @@
-# ===================================
-# A股自选股智能分析系统 - 依赖列表
-# ===================================
-
-# 核心依赖
-python-dotenv>=1.0.0        # 环境变量配置管理
-tenacity>=8.2.0             # 重试机制（指数退避）
-sqlalchemy>=2.0.0           # ORM数据库操作
-schedule>=1.2.0             # 定时任务调度
-
-# 数据源依赖（多源策略，按优先级排序）
-efinance>=0.5.5             # Priority 0: 东方财富数据源（最高优先级）https://github.com/Micro-sheep/efinance
-akshare>=1.12.0             # Priority 1: 东方财富爬虫数据源
-tushare>=1.4.0              # Priority 2: 挖地兔 Pro API
-baostock>=0.8.0             # Priority 3: 证券宝数据
-yfinance>=0.2.0             # Priority 4: Yahoo Finance (Fallback)
-
-#飞书
-lark-oapi>=1.0.0             # 飞书API
-
-# 数据处理
-pandas>=2.0.0               # 数据分析
-numpy>=1.24.0               # 数值计算
-
-# AI 分析
-google-generativeai>=0.8.0  # Gemini API
-openai>=1.0.0               # OpenAI 兼容 API（可选，支持 DeepSeek/通义千问等）
-
-# 搜索引擎（用于获取股票新闻）
-tavily-python>=0.3.0        # Tavily 搜索 API（每月 1000 次免费）
-google-search-results>=2.4.0  # SerpAPI（每月 100 次免费）
-
-# 网络请求
-requests>=2.31.0            # HTTP 请求
-markdown2>=2.4.0            # Markdown 转 HTML
-fake-useragent>=1.4.0       # 随机 User-Agent 防封禁
-httpx[socks]                # HTTP 客户端 + SOCKS 代理支持（OpenAI 可选依赖）
-dingtalk-stream >= 0.24.3    # 钉钉 Stream SDK
-# 数据库
-# SQLite 是 Python 内置，无需额外安装
-
-# Discord 机器人
-discord.py>=2.0.0              # Discord 机器人开发库
+Flask==3.0.0
+markdown==3.5.1
+python-dotenv==1.0.0
+gunicorn==21.2.0
