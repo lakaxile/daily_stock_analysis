@@ -232,36 +232,23 @@ def api_analyze_stock(code):
         analyzer = GeminiAnalyzer()
         if analyzer.is_available():
             context = f"""
-{data['name']}({code})实时分析请求
+请分析股票{data['name']}({code})：
 
-## 今日行情
-- 昨收: ¥{data['yesterday_close']:.2f}
-- 今开: ¥{data['today_open']:.2f}
-- 最高: ¥{data['today_high']:.2f}
-- 最低: ¥{data['today_low']:.2f}
-- 今收: ¥{data['today_close']:.2f}
-- 涨跌: {data['change_pct']:+.2f}%
-- 振幅: {data['amplitude']:.2f}%
-- 量比: {data['volume_ratio']:.2f}x
+今日行情：昨收¥{data['yesterday_close']:.2f}，今开¥{data['today_open']:.2f}，今收¥{data['today_close']:.2f}，涨跌{data['change_pct']:+.2f}%，振幅{data['amplitude']:.2f}%，量比{data['volume_ratio']:.2f}x
 
-## 技术指标
-- MA5: ¥{data['ma5']:.2f}
-- MA10: ¥{data['ma10']:.2f}
-- MA20: ¥{data['ma20']:.2f}
-- 均线排列: {'多头' if data['ma5'] > data['ma10'] > data['ma20'] else '非多头'}
+技术指标：MA5 ¥{data['ma5']:.2f}，MA10 ¥{data['ma10']:.2f}，MA20 ¥{data['ma20']:.2f}，{'多头排列' if data['ma5'] > data['ma10'] > data['ma20'] else '非多头排列'}
 
-请简要分析：
-1. 当前技术形态如何？
-2. 是否值得关注？
-3. 主要风险点？
-4. 操作建议？
+请用简洁的语言（150字以内）回答：
+1. 技术形态：当前是强势/弱势/震荡？
+2. 操作建议：买入/观望/卖出？给出理由
+3. 风险提示：最大风险是什么？
 
-请简洁回答（200字以内）。
+直接给出分析结果，不要JSON格式。
 """
             
             generation_config = {
                 'temperature': 0.3,
-                'max_output_tokens': 1024,
+                'max_output_tokens': 512,
             }
             
             try:
