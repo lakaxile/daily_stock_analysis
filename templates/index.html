@@ -6,6 +6,29 @@
 <div class="hero">
     <h2>🎯 六维真强势选股策略</h2>
     <p class="subtitle">技术扫描 + AI深度分析 = 精准选股</p>
+
+    <!-- 股票搜索框 -->
+    <div class="search-box">
+        <input type="text" id="stockCode" placeholder="输入股票代码（如：600519、000001）" maxlength="6">
+        <button onclick="analyzeStock()" class="btn-search">🔍 AI分析</button>
+    </div>
+    <p class="search-hint">支持沪深A股，实时获取K线数据+AI深度分析</p>
+</div>
+
+<!-- 分析结果展示区 -->
+<div id="analysisResult" class="analysis-result" style="display:none;">
+    <div class="card">
+        <div class="result-header">
+            <h3 id="resultTitle">分析结果</h3>
+            <button onclick="closeResult()" class="btn-close">✕</button>
+        </div>
+        <div id="resultContent" class="result-content">
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>AI分析中...</p>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="dashboard">

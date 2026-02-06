@@ -2,3 +2,6 @@ Flask==3.0.0
 markdown==3.5.1
 python-dotenv==1.0.0
 gunicorn==21.2.0
+yfinance==0.2.37
+pandas==2.2.0
+numpy==1.26.4
