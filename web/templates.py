@@ -942,6 +942,17 @@ def render_config_page(
     
     <hr class="section-divider">
     
+    <!-- 今日分析结果 -->
+    <div class="analysis-section" style="margin-top: 0; padding-top: 0; border-top: none;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h3>📊 今日分析结果</h3>
+        <a href="/report" style="font-size: 0.8rem; color: var(--primary); text-decoration: none;">📄 查看完整报告 →</a>
+      </div>
+      <div id="stock_results" class="stock-results-grid"></div>
+    </div>
+    
+    <hr class="section-divider">
+    
     <!-- 自选股配置区域 -->
     <form method="post" action="/update">
       <div class="form-group">
@@ -958,12 +969,120 @@ def render_config_page(
     </form>
     
     <div class="footer">
-      <p>API: <code>/health</code> · <code>/analysis?code=xxx</code> · <code>/tasks</code></p>
+      <p>API: <code>/health</code> · <code>/analysis?code=xxx</code> · <code>/stock_results</code></p>
     </div>
   </div>
   
   {toast_html}
   {analysis_js}
+  
+  <script>
+  (function() {{
+    function loadStockResults() {{
+      const container = document.getElementById('stock_results');
+      container.innerHTML = '<div class="task-hint">⏳ 加载中...</div>';
+      
+      fetch('/stock_results')
+        .then(r => r.json())
+        .then(data => {{
+          if (data.success && data.results && data.results.length > 0) {{
+            renderResults(data.results);
+          }} else {{
+            container.innerHTML = '<div class="task-hint">📭 今日暂无分析结果</div>';
+          }}
+        }})
+        .catch(e => {{
+          container.innerHTML = '<div class="task-hint">❌ 加载失败</div>';
+        }});
+    }}
+    
+    function getAdviceStyle(advice) {{
+      if (advice.includes('买') || advice.includes('加仓')) return {{ bg: '#ecfdf5', border: '#10b981', color: '#065f46', icon: '🟢' }};
+      if (advice.includes('卖') || advice.includes('减仓')) return {{ bg: '#fef2f2', border: '#ef4444', color: '#991b1b', icon: '🔴' }};
+      if (advice.includes('持有')) return {{ bg: '#fffbeb', border: '#f59e0b', color: '#92400e', icon: '🟡' }};
+      return {{ bg: '#f9fafb', border: '#9ca3af', color: '#4b5563', icon: '⚪' }};
+    }}
+    
+    function renderResults(results) {{
+      const container = document.getElementById('stock_results');
+      let html = '';
+      
+      results.forEach(r => {{
+        const style = getAdviceStyle(r.operation_advice);
+        html += `
+          <div class="stock-result-card" style="background:${{style.bg}};border-color:${{style.border}}">
+            <div class="stock-result-header">
+              <span class="stock-result-icon">${{style.icon}}</span>
+              <span class="stock-result-name">${{r.name}}</span>
+              <span class="stock-result-code">${{r.code}}</span>
+            </div>
+            <div class="stock-result-body">
+              <span class="stock-result-advice" style="color:${{style.color}}">${{r.operation_advice}}</span>
+              <span class="stock-result-score">${{r.sentiment_score}}分</span>
+              <span class="stock-result-trend">${{r.trend_prediction}}</span>
+            </div>
+          </div>
+        `;
+      }});
+      
+      container.innerHTML = html;
+    }}
+    
+    // 页面加载时自动获取结果
+    loadStockResults();
+  }})();
+  </script>
+  
+  <style>
+  .stock-results-grid {{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }}
+  .stock-result-card {{
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid;
+    border-radius: 0.5rem;
+    font-size: 0.8rem;
+  }}
+  .stock-result-header {{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }}
+  .stock-result-icon {{
+    font-size: 0.9rem;
+  }}
+  .stock-result-name {{
+    font-weight: 600;
+    color: #1f2937;
+  }}
+  .stock-result-code {{
+    font-family: monospace;
+    color: #6b7280;
+    font-size: 0.75rem;
+    background: rgba(0,0,0,0.05);
+    padding: 0.1rem 0.3rem;
+    border-radius: 0.25rem;
+  }}
+  .stock-result-body {{
+    display: flex;
+    gap: 0.75rem;
+    padding-left: 1.4rem;
+  }}
+  .stock-result-advice {{
+    font-weight: 600;
+  }}
+  .stock-result-score {{
+    color: #6b7280;
+  }}
+  .stock-result-trend {{
+    color: #6b7280;
+  }}
+  </style>
 """
     
     page = render_base(
@@ -999,6 +1118,111 @@ def render_error_page(
     
     page = render_base(
         title=f"错误 {status_code}",
+        content=content
+    )
+    return page.encode("utf-8")
+
+
+def render_report_page(
+    report_content: str,
+    date_str: Optional[str] = None,
+    reports_list: Optional[list] = None
+) -> bytes:
+    """
+    渲染分析报告页面
+    
+    Args:
+        report_content: Markdown 格式的报告内容
+        date_str: 日期字符串
+        reports_list: 可选的报告列表
+    """
+    from datetime import datetime
+    
+    if not date_str:
+        date_str = datetime.now().strftime('%Y%m%d')
+    
+    # 格式化日期显示
+    try:
+        date_display = f"{date_str[:4]}-{date_str[4:6]}-{date_str[6:8]}"
+    except:
+        date_display = date_str
+    
+    # 构建报告选择器
+    reports_options = ""
+    if reports_list:
+        for r in reports_list:
+            selected = "selected" if r['date'] == date_str else ""
+            d = r['date']
+            label = f"{d[:4]}-{d[4:6]}-{d[6:8]}"
+            reports_options += f'<option value="{d}" {selected}>{label}</option>'
+    
+    # 转义 HTML 并处理 Markdown（简单处理）
+    safe_content = html.escape(report_content)
+    
+    content = f"""
+  <div class="container" style="max-width: 900px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+      <h2 style="margin: 0;">📊 分析报告</h2>
+      <div style="display: flex; gap: 0.5rem; align-items: center;">
+        <select id="report_date" class="report-select" onchange="location.href='/report?date='+this.value" style="min-width: 140px;">
+          {reports_options}
+        </select>
+        <a href="/" style="color: var(--primary); text-decoration: none; font-size: 0.875rem;">← 返回首页</a>
+      </div>
+    </div>
+    
+    <div class="report-content" id="report_content">
+      <pre style="white-space: pre-wrap; word-wrap: break-word; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; font-size: 0.875rem; background: #f9fafb; padding: 1.5rem; border-radius: 0.5rem; border: 1px solid var(--border); overflow-x: auto;">{safe_content}</pre>
+    </div>
+  </div>
+  
+  <script>
+  (function() {{
+    // 简单的 Markdown 渲染
+    const pre = document.querySelector('#report_content pre');
+    let content = pre.textContent;
+    
+    // 标题
+    content = content.replace(/^# (.+)$/gm, '<h1 style="font-size:1.5rem;font-weight:700;margin:1rem 0 0.5rem;color:#1f2937;">$1</h1>');
+    content = content.replace(/^## (.+)$/gm, '<h2 style="font-size:1.25rem;font-weight:600;margin:1.5rem 0 0.5rem;color:#374151;border-bottom:1px solid #e5e7eb;padding-bottom:0.25rem;">$1</h2>');
+    content = content.replace(/^### (.+)$/gm, '<h3 style="font-size:1rem;font-weight:600;margin:1rem 0 0.25rem;color:#4b5563;">$1</h3>');
+    
+    // 粗体
+    content = content.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    
+    // 表格标记行
+    content = content.replace(/^\|[-:| ]+\|$/gm, '');
+    
+    // 表格行
+    content = content.replace(/^\| (.+) \|$/gm, function(match, inner) {{
+      const cells = inner.split(' | ').map(c => '<td style="padding:0.25rem 0.5rem;border:1px solid #e5e7eb;">' + c.trim() + '</td>').join('');
+      return '<tr>' + cells + '</tr>';
+    }});
+    
+    // 引用
+    content = content.replace(/^> (.+)$/gm, '<blockquote style="margin:0.5rem 0;padding:0.5rem 1rem;background:#f3f4f6;border-left:3px solid var(--primary);color:#4b5563;">$1</blockquote>');
+    
+    // Emoji 高亮
+    content = content.replace(/🟢/g, '<span style="color:#10b981;">🟢</span>');
+    content = content.replace(/🟡/g, '<span style="color:#f59e0b;">🟡</span>');
+    content = content.replace(/🔴/g, '<span style="color:#ef4444;">🔴</span>');
+    content = content.replace(/⚪/g, '<span style="color:#9ca3af;">⚪</span>');
+    content = content.replace(/🟠/g, '<span style="color:#f97316;">🟠</span>');
+    
+    // 分隔线
+    content = content.replace(/^---$/gm, '<hr style="margin:1.5rem 0;border:none;border-top:1px solid #e5e7eb;">');
+    
+    // 换行
+    content = content.replace(/\\n/g, '<br>');
+    
+    pre.innerHTML = content;
+    pre.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+  }})();
+  </script>
+"""
+    
+    page = render_base(
+        title=f"分析报告 {date_display} | WebUI",
         content=content
     )
     return page.encode("utf-8")

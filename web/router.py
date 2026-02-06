@@ -322,6 +322,18 @@ def create_default_router() -> Router:
         "查询任务状态"
     )
     
+    router.register(
+        "/stock_results", "GET",
+        lambda q: api_handler.handle_stock_results(),
+        "获取今日分析结果"
+    )
+    
+    router.register(
+        "/report", "GET",
+        lambda q: api_handler.handle_report(q),
+        "查看分析报告"
+    )
+    
     # === Bot Webhook 路由 ===
     # 注意：Bot Webhook 路由在 dispatch_post 中特殊处理
     # 这里只是为了在路由列表中显示

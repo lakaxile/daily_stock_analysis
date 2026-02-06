@@ -14,6 +14,7 @@ A股自选股智能分析系统 - 主调度程序
     python main.py              # 正常运行
     python main.py --debug      # 调试模式
     python main.py --dry-run    # 仅获取数据不分析
+    python main.py --scan       # 全市场扫描（上证）
 
 交易理念（已融入分析）：
 - 严进策略：不追高，乖离率 > 5% 不买入
@@ -200,6 +201,19 @@ def parse_arguments() -> argparse.Namespace:
         '--webui-only',
         action='store_true',
         help='仅启动 WebUI 服务，不自动执行分析（通过 /analysis API 手动触发）'
+    )
+    
+    parser.add_argument(
+        '--scan',
+        action='store_true',
+        help='全市场扫描模式：扫描上证全部股票，只推送S级（80分以上）到企业微信'
+    )
+    
+    parser.add_argument(
+        '--scan-min-score',
+        type=int,
+        default=80,
+        help='扫描模式最低分数阈值（默认80=S级）'
     )
     
     return parser.parse_args()
@@ -412,6 +426,24 @@ def main() -> int:
                 analyzer = GeminiAnalyzer(api_key=config.gemini_api_key)
             
             run_market_review(notifier, analyzer, search_service)
+            return 0
+        
+        # 模式: 全市场扫描
+        if args.scan:
+            logger.info("模式: 上证全市场扫描")
+            logger.info(f"最低分数阈值: {args.scan_min_score}")
+            
+            from src.scanner import run_market_scan
+            
+            results = run_market_scan(min_score=args.scan_min_score)
+            
+            if results:
+                logger.info(f"\n===== 扫描结果: {len(results)} 只S级股票 =====")
+                for r in sorted(results, key=lambda x: x.score, reverse=True):
+                    logger.info(f"🟢 {r.name}({r.code}): {r.score}分 | {r.operation_advice}")
+            else:
+                logger.info("\n扫描完成，本次无S级股票")
+            
             return 0
         
         # 模式2: 定时任务模式

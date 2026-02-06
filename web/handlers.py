@@ -23,7 +23,7 @@ from http import HTTPStatus
 from datetime import datetime
 from typing import Dict, Any, TYPE_CHECKING
 
-from web.services import get_config_service, get_analysis_service
+from web.services import get_config_service, get_analysis_service, get_stock_results_service
 from web.templates import render_config_page
 from src.enums import ReportType
 
@@ -247,6 +247,44 @@ class ApiHandler:
             )
         
         return JsonResponse({"success": True, "task": task})
+    
+    def handle_stock_results(self) -> Response:
+        """
+        获取今日分析结果 GET /stock_results
+        
+        返回:
+            {
+                "success": true,
+                "results": [
+                    {"code": "601126", "name": "四方股份", ...},
+                    ...
+                ]
+            }
+        """
+        service = get_stock_results_service()
+        results = service.get_today_results()
+        return JsonResponse({"success": True, "results": results})
+    
+    def handle_report(self, query: Dict[str, list]) -> Response:
+        """
+        获取分析报告页面 GET /report?date=YYYYMMDD
+        """
+        from web.templates import render_report_page
+        
+        date_list = query.get("date", [])
+        date_str = date_list[0] if date_list else None
+        
+        service = get_stock_results_service()
+        content = service.get_report_content(date_str)
+        reports = service.list_reports()
+        
+        if content is None:
+            from web.templates import render_error_page
+            body = render_error_page(404, "报告未找到", f"日期 {date_str or '今日'} 的报告不存在")
+            return HtmlResponse(body, status=HTTPStatus.NOT_FOUND)
+        
+        body = render_report_page(content, date_str, reports)
+        return HtmlResponse(body)
 
 
 # ============================================================

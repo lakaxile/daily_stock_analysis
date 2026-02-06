@@ -314,6 +314,103 @@ class AnalysisService:
 
 
 # ============================================================
+# 分析结果服务
+# ============================================================
+
+class StockResultsService:
+    """
+    分析结果服务
+    
+    负责解析今日报告文件，提取股票分析结果
+    """
+    
+    _REPORT_DIR = "src/reports"
+    
+    # 解析报告摘要行的正则
+    # 匹配格式: 🟢 **四方股份(601126)**: 买入 | 评分 75 | 看多
+    _SUMMARY_RE = re.compile(
+        r'^[🟢🟡🔴⚪🟠]\s*\*\*(.+?)\((\w+)\)\*\*:\s*(.+?)\s*\|\s*评分\s*(\d+)\s*\|\s*(.+)$'
+    )
+    
+    def get_today_results(self) -> List[Dict[str, Any]]:
+        """
+        获取今日分析结果
+        
+        Returns:
+            股票结果列表，每项包含: code, name, operation_advice, sentiment_score, trend_prediction
+        """
+        today = datetime.now().strftime('%Y%m%d')
+        report_path = os.path.join(self._REPORT_DIR, f"report_{today}.md")
+        
+        if not os.path.exists(report_path):
+            logger.warning(f"[StockResultsService] 今日报告不存在: {report_path}")
+            return []
+        
+        results = []
+        try:
+            with open(report_path, 'r', encoding='utf-8') as f:
+                for line in f:
+                    line = line.strip()
+                    m = self._SUMMARY_RE.match(line)
+                    if m:
+                        results.append({
+                            'name': m.group(1),
+                            'code': m.group(2),
+                            'operation_advice': m.group(3).strip(),
+                            'sentiment_score': int(m.group(4)),
+                            'trend_prediction': m.group(5).strip()
+                        })
+            
+            logger.info(f"[StockResultsService] 解析到 {len(results)} 只股票的今日分析结果")
+        except Exception as e:
+            logger.error(f"[StockResultsService] 解析报告失败: {e}")
+        
+        return results
+
+    def get_report_content(self, date_str: str = None) -> Optional[str]:
+        """
+        获取指定日期的报告内容
+        
+        Args:
+            date_str: 日期字符串 YYYYMMDD，默认今天
+        """
+        if not date_str:
+            date_str = datetime.now().strftime('%Y%m%d')
+        
+        report_path = os.path.join(self._REPORT_DIR, f"report_{date_str}.md")
+        
+        if not os.path.exists(report_path):
+            return None
+        
+        try:
+            with open(report_path, 'r', encoding='utf-8') as f:
+                return f.read()
+        except Exception as e:
+            logger.error(f"[StockResultsService] 读取报告失败: {e}")
+            return None
+
+    def list_reports(self, limit: int = 7) -> List[Dict[str, str]]:
+        """
+        列出最近的报告文件
+        """
+        import glob
+        pattern = os.path.join(self._REPORT_DIR, "report_*.md")
+        files = sorted(glob.glob(pattern), reverse=True)[:limit]
+        
+        reports = []
+        for f in files:
+            basename = os.path.basename(f)
+            # report_20260129.md -> 20260129
+            date_str = basename.replace("report_", "").replace(".md", "")
+            reports.append({
+                "date": date_str,
+                "filename": basename,
+                "size": os.path.getsize(f)
+            })
+        return reports
+
+
+# ============================================================
 # 便捷函数
 # ============================================================
 
@@ -325,3 +422,8 @@ def get_config_service() -> ConfigService:
 def get_analysis_service() -> AnalysisService:
     """获取分析服务单例"""
     return AnalysisService.get_instance()
+
+
+def get_stock_results_service() -> StockResultsService:
+    """获取分析结果服务实例"""
+    return StockResultsService()

@@ -1,0 +1,370 @@
+{
+  "success": true,
+  "avg_sentiment": 0.07804970000000001,
+  "sentiment_score_10": 5.3902485,
+  "mood_label": "🟡 情绪中性 (震荡)",
+  "market_mood": "中性",
+  "counts": {
+    "Bullish": 6,
+    "Somewhat-Bullish": 14,
+    "Neutral": 18,
+    "Somewhat-Bearish": 10,
+    "Bearish": 2
+  },
+  "bullish_total": 20,
+  "bearish_total": 12,
+  "neutral_total": 18,
+  "news_count": 50,
+  "news_summary": [
+    {
+      "title": "Archer-Daniels-Midland Company (NYSE:ADM) Q4 2025 Earnings Call Transcript",
+      "label": "Somewhat-Bullish",
+      "score": 0.330183,
+      "time": "20260204T141202",
+      "source": "Insider Monkey"
+    },
+    {
+      "title": "Truist Financial Corp Sells 441,892 Shares of Kenvue Inc. $KVUE",
+      "label": "Neutral",
+      "score": 0.051642,
+      "time": "20260204T135733",
+      "source": "MarketBeat"
+    },
+    {
+      "title": "TD Cowen Raises Marathon Petroleum (NYSE:MPC) Price Target to $198.00",
+      "label": "Somewhat-Bullish",
+      "score": 0.348996,
+      "time": "20260204T135548",
+      "source": "MarketBeat"
+    },
+    {
+      "title": "Morgan Stanley Downgrades NetApp (NTAP) Due to 15-Year Low in IT Hardware Budget Growth",
+      "label": "Neutral",
+      "score": -0.1165,
+      "time": "20260204T133950",
+      "source": "Finviz"
+    },
+    {
+      "title": "IDEX Corp (NYSE:IEX) Reports In-Line Q4 Earnings, Highlights AI-Driven Order Growth Amid Mixed Segment Demand",
+      "label": "Somewhat-Bearish",
+      "score": -0.207721,
+      "time": "20260204T133239",
+      "source": "Chartmill"
+    },
+    {
+      "title": "Bunge Global (NYSE:BG) Exceeds Q4 CY2025 Expectations",
+      "label": "Somewhat-Bullish",
+      "score": 0.192668,
+      "time": "20260204T132521",
+      "source": "Finviz"
+    },
+    {
+      "title": "Principal Financial Group Inc. Reduces Stake in Essential Properties Realty Trust, Inc. $EPRT",
+      "label": "Somewhat-Bullish",
+      "score": 0.170054,
+      "time": "20260204T132351",
+      "source": "MarketBeat"
+    },
+    {
+      "title": "Cantor Fitzgerald Lowers Qualcomm (QCOM) PT to $160, Cites Conservative Guidanc, Looming Market Share Shifts",
+      "label": "Somewhat-Bearish",
+      "score": -0.278411,
+      "time": "20260204T132059",
+      "source": "Finviz"
+    },
+    {
+      "title": "Bernstein Raises PPG Industries (PPG) PT to $130, Cites Revenue Beat Despite Q4 Earnings Miss",
+      "label": "Somewhat-Bullish",
+      "score": 0.293272,
+      "time": "20260204T132058",
+      "source": "Insider Monkey"
+    },
+    {
+      "title": "Truist Lowers Synchrony Financial (SYF) PT to $84 Following Cautious Credit Outlook, Adjusted 2026 Guidance",
+      "label": "Somewhat-Bearish",
+      "score": -0.27255,
+      "time": "20260204T132004",
+      "source": "Insider Monkey"
+    },
+    {
+      "title": "Hubbell Incorporated (NYSE:HUBB) Q4 2025 Earnings Call Transcript",
+      "label": "Neutral",
+      "score": 0.104665,
+      "time": "20260204T131741",
+      "source": "Insider Monkey"
+    },
+    {
+      "title": "CDW Stock Slides Despite Beating Quarterly Revenue Estimates",
+      "label": "Somewhat-Bearish",
+      "score": -0.250762,
+      "time": "20260204T131624",
+      "source": "TipRanks"
+    },
+    {
+      "title": "Morgan Stanley Downgrades NetApp (NTAP) Due to 15-Year Low in IT Hardware Budget Growth",
+      "label": "Somewhat-Bearish",
+      "score": -0.189287,
+      "time": "20260204T131453",
+      "source": "Yahoo! Finance Canada"
+    },
+    {
+      "title": "American Express Slipped 3% Last Week. Here’s Where the Stock Could Go in 2026",
+      "label": "Somewhat-Bullish",
+      "score": 0.158609,
+      "time": "20260204T131220",
+      "source": "TIKR.com"
+    },
+    {
+      "title": "Callan Family Office LLC Reduces Position in GE Vernova Inc. $GEV",
+      "label": "Somewhat-Bullish",
+      "score": 0.281369,
+      "time": "20260204T131137",
+      "source": "MarketBeat"
+    },
+    {
+      "title": "Citigroup Inc. $C Shares Bought by Jones Financial Companies Lllp",
+      "label": "Somewhat-Bullish",
+      "score": 0.302095,
+      "time": "20260204T131123",
+      "source": "MarketBeat"
+    },
+    {
+      "title": "Truist Adjusts State Street (STT) Outlook Following Strong Fee Growth, Higher Expense Forecasts",
+      "label": "Neutral",
+      "score": -0.110063,
+      "time": "20260204T131100",
+      "source": "Yahoo Finance"
+    },
+    {
+      "title": "Canaccord Genuity reiterates Buy rating on Hillman Solutions stock By Investing.com",
+      "label": "Somewhat-Bullish",
+      "score": 0.261198,
+      "time": "20260204T130422",
+      "source": "Investing.com India"
+    },
+    {
+      "title": "Here Are Wednesday’s Top Wall Street Analyst Research Calls: AES Corp, Airbnb, Cloudflare, Devon Energy, Levi Strauss, Lumentum, PayPal, and More",
+      "label": "Neutral",
+      "score": 0.130941,
+      "time": "20260204T130317",
+      "source": "24/7 Wall St."
+    },
+    {
+      "title": "Solar Panel Market to Reach US$ 642.3 Million by 2031, Growing at",
+      "label": "Bullish",
+      "score": 0.350445,
+      "time": "20260204T130225",
+      "source": "openPR.com"
+    },
+    {
+      "title": "Here Are Wednesday’s Top Wall Street Analyst Research Calls: AES Corp, Airbnb, Cloudflare, Devon Energy, Levi Strauss, Lumentum, PayPal, and More",
+      "label": "Neutral",
+      "score": 0.105236,
+      "time": "20260204T130003",
+      "source": "Yahoo Finance"
+    },
+    {
+      "title": "Citizens Financial Group, Inc. $CFG Shares Purchased by National Pension Service",
+      "label": "Bullish",
+      "score": 0.548918,
+      "time": "20260204T125508",
+      "source": "MarketBeat"
+    },
+    {
+      "title": "Do Wall Street Analysts Like PACCAR Stock?",
+      "label": "Somewhat-Bullish",
+      "score": 0.263724,
+      "time": "20260204T124755",
+      "source": "Palmetto Grain Brokerage"
+    },
+    {
+      "title": "Why Is Clorox Stock Falling Wednesday? - Clorox (NYSE:CLX)",
+      "label": "Somewhat-Bearish",
+      "score": -0.239687,
+      "time": "20260204T124709",
+      "source": "Benzinga"
+    },
+    {
+      "title": "Famous Wall Street Legend Predicts Gold Could Hit $10,000",
+      "label": "Neutral",
+      "score": 0.111048,
+      "time": "20260204T122838",
+      "source": "24/7 Wall St."
+    },
+    {
+      "title": "Pepsico stock price target raised to $165 from $154 at Wells Fargo",
+      "label": "Neutral",
+      "score": 0.034774,
+      "time": "20260204T120818",
+      "source": "Investing.com Nigeria"
+    },
+    {
+      "title": "Equifax Revenue Rises Despite Weak Hiring, Mortgage Markets",
+      "label": "Bullish",
+      "score": 0.411986,
+      "time": "20260204T115830",
+      "source": "The Wall Street Journal"
+    },
+    {
+      "title": "Avery Dennison (NYSE:AVY) Reports Sales Below Analyst Estimates In Q4 CY2025 Earnings",
+      "label": "Neutral",
+      "score": 0.015995,
+      "time": "20260204T115718",
+      "source": "Yahoo Finance UK"
+    },
+    {
+      "title": "Tractor Supply (NASDAQ:TSCO) Downgraded to \"Strong Sell\" Rating by Zacks Research",
+      "label": "Somewhat-Bearish",
+      "score": -0.218724,
+      "time": "20260204T115216",
+      "source": "MarketBeat"
+    },
+    {
+      "title": "Precious Metals Market to Witness Stunning Growth from 2026",
+      "label": "Neutral",
+      "score": 0.024175,
+      "time": "20260204T113602",
+      "source": "openPR.com"
+    },
+    {
+      "title": "Machina Capital S.A.S. Increases Stake in Altria Group, Inc. $MO",
+      "label": "Somewhat-Bullish",
+      "score": 0.255439,
+      "time": "20260204T112750",
+      "source": "MarketBeat"
+    },
+    {
+      "title": "IT Q4 Deep Dive: Strategic Shifts Amid Market Caution and Transformation",
+      "label": "Neutral",
+      "score": 0.103449,
+      "time": "20260204T112743",
+      "source": "Finviz"
+    },
+    {
+      "title": "Equifax (NYSE:EFX) Exceeds Q4 CY2025 Expectations",
+      "label": "Bullish",
+      "score": 0.416828,
+      "time": "20260204T112719",
+      "source": "Yahoo Finance"
+    },
+    {
+      "title": "The Truth About Regions Financial Corp: Is RF Stock a Secret Steal or a Total Trap?",
+      "label": "Neutral",
+      "score": 0.13883,
+      "time": "20260204T110910",
+      "source": "AD HOC NEWS"
+    },
+    {
+      "title": "Myocardial Infarction Market Poised for a Boom | Bristol-Myers Squibb Co., Bayer AG, Johnson & Johnson Services Inc.",
+      "label": "Somewhat-Bullish",
+      "score": 0.275007,
+      "time": "20260204T110433",
+      "source": "openPR.com"
+    },
+    {
+      "title": "Atkore (ATKR) Earnings Swings Keep Dividend Coverage Concerns In Focus",
+      "label": "Somewhat-Bearish",
+      "score": -0.26051,
+      "time": "20260204T105838",
+      "source": "Simply Wall Street"
+    },
+    {
+      "title": "28,491 Shares in The Travelers Companies, Inc. $TRV Acquired by Peregrine Asset Advisers Inc.",
+      "label": "Bullish",
+      "score": 0.421923,
+      "time": "20260204T105813",
+      "source": "MarketBeat"
+    },
+    {
+      "title": "3 Reasons to Avoid MLM and 1 Stock to Buy Instead",
+      "label": "Bearish",
+      "score": -0.441192,
+      "time": "20260204T105733",
+      "source": "Finviz"
+    },
+    {
+      "title": "Bunge reports Q4 earnings beat, issues cautious 2026 outlook",
+      "label": "Neutral",
+      "score": 0.033801,
+      "time": "20260204T105719",
+      "source": "Investing.com"
+    },
+    {
+      "title": "Principal Financial Group Inc. Lowers Holdings in The Travelers Companies, Inc. $TRV",
+      "label": "Neutral",
+      "score": 0.009358,
+      "time": "20260204T105439",
+      "source": "MarketBeat"
+    },
+    {
+      "title": "Crown Castle Rethinks Cash Flows As DISH Default Tests Tenant Resilience",
+      "label": "Neutral",
+      "score": -0.044545,
+      "time": "20260204T103649",
+      "source": "Simply Wall Street"
+    },
+    {
+      "title": "Thrivent Financial for Lutherans Sells 18,796 Shares of Simon Property Group, Inc. $SPG",
+      "label": "Somewhat-Bullish",
+      "score": 0.258391,
+      "time": "20260204T103509",
+      "source": "MarketBeat"
+    },
+    {
+      "title": "Valley National Bancorp (NASDAQ:VLY) Sets New 12-Month High - Time to Buy?",
+      "label": "Neutral",
+      "score": 0.038432,
+      "time": "20260204T102852",
+      "source": "MarketBeat"
+    },
+    {
+      "title": "Banco Santander Brasil Q4 Revenue Decline and Financial Metrics Overview",
+      "label": "Somewhat-Bearish",
+      "score": -0.277314,
+      "time": "20260204T102839",
+      "source": "Intellectia AI"
+    },
+    {
+      "title": "2 Bank Stocks to Target This Week and 1 Facing Headwinds",
+      "label": "Bullish",
+      "score": 0.512587,
+      "time": "20260204T102819",
+      "source": "Finviz"
+    },
+    {
+      "title": "United Rentals Executive VP & COO Michael Durand Sells 36% Of Holding",
+      "label": "Somewhat-Bearish",
+      "score": -0.269293,
+      "time": "20260204T102815",
+      "source": "Simply Wall Street"
+    },
+    {
+      "title": "Adell Harriman & Carpenter Inc. Has $6.77 Million Position in AT&T Inc. $T",
+      "label": "Neutral",
+      "score": 0.122808,
+      "time": "20260204T102811",
+      "source": "MarketBeat"
+    },
+    {
+      "title": "Dividend Aristocrats In Focus: W.W. Grainger",
+      "label": "Neutral",
+      "score": 0.119677,
+      "time": "20260204T102739",
+      "source": "Sure Dividend"
+    },
+    {
+      "title": "CF Industries stock rating downgraded to Sell by Rothschild Redburn",
+      "label": "Bearish",
+      "score": -0.41189,
+      "time": "20260204T102725",
+      "source": "Investing.com UK"
+    },
+    {
+      "title": "Charles River Laboratories International, Inc. $CRL Position Boosted by Van Berkom & Associates Inc.",
+      "label": "Somewhat-Bullish",
+      "score": 0.292411,
+      "time": "20260204T102438",
+      "source": "MarketBeat"
+    }
+  ]
+}
