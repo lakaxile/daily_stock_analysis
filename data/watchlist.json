@@ -1,0 +1,84 @@
+{
+  "2026-02-03": [
+    {
+      "code": "300107",
+      "name": "建新股份",
+      "score": 85,
+      "trend": "强烈看多",
+      "operation_advice": "买入",
+      "added_date": "2026-02-03",
+      "last_check": "2026-02-03",
+      "status": "active",
+      "removal_reason": null
+    },
+    {
+      "code": "301588",
+      "name": "美新科技",
+      "score": 85,
+      "trend": "强烈看多",
+      "operation_advice": "买入",
+      "added_date": "2026-02-03",
+      "last_check": "2026-02-03",
+      "status": "active",
+      "removal_reason": null
+    }
+  ],
+  "2026-02-05": [
+    {
+      "code": "600436",
+      "name": "漳州片仔癀",
+      "score": 90,
+      "change_pct": 3.996584950973843,
+      "price": 170.44000244140625,
+      "volume_ratio": 1.746805145210128,
+      "trend": "站上MA5",
+      "operation_advice": "买入",
+      "added_date": "2026-02-05",
+      "last_check": "2026-02-05",
+      "status": "active",
+      "removal_reason": null
+    },
+    {
+      "code": "600754",
+      "name": "锦江酒店",
+      "score": 90,
+      "change_pct": 5.138637102409464,
+      "price": 28.440000534057617,
+      "volume_ratio": 1.5767985172263526,
+      "trend": "多头排列",
+      "operation_advice": "买入",
+      "added_date": "2026-02-05",
+      "last_check": "2026-02-05",
+      "status": "active",
+      "removal_reason": null
+    },
+    {
+      "code": "600897",
+      "name": "厦门国贸",
+      "score": 90,
+      "change_pct": 4.666308172062507,
+      "price": 19.290000915527344,
+      "volume_ratio": 1.2818159623113023,
+      "trend": "多头排列",
+      "operation_advice": "买入",
+      "added_date": "2026-02-05",
+      "last_check": "2026-02-05",
+      "status": "active",
+      "removal_reason": null
+    },
+    {
+      "code": "600305",
+      "name": "恒顺醋业",
+      "score": 90,
+      "change_pct": 1.597052935600391,
+      "price": 8.270000457763672,
+      "volume_ratio": 1.295606194885912,
+      "trend": "多头排列",
+      "operation_advice": "买入",
+      "added_date": "2026-02-05",
+      "last_check": "2026-02-05",
+      "status": "active",
+      "removal_reason": null
+    }
+  ]
+}
