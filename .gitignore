@@ -1,14 +1,3 @@
-# 环境变量文件（包含敏感信息，禁止提交）
-.env
-.env.*
-*.env
-*.env.local
-.env.*.local
-
-# 测试文件（可能包含敏感配置）
-test_*.py
-!test_env.py
-
 # Python
 __pycache__/
 *.py[cod]
@@ -35,35 +24,32 @@ wheels/
 venv/
 ENV/
 env/
-.venv/
 
 # IDE
-.idea/
 .vscode/
+.idea/
 *.swp
 *.swo
 *~
-.cursorrules
 
-# 数据和日志
-data/
-logs/
-reports/
+# 环境变量（重要！不要泄露API Key）
+.env
+
+# 数据库
 *.db
 *.sqlite
-*.sqlite3
 
-# 系统文件
+# 日志
+*.log
+
+# macOS
 .DS_Store
-Thumbs.db
 
-# 测试
-.pytest_cache/
-.coverage
-htmlcov/
+# 临时文件
+tmp/
+temp/
+*.tmp
 
-local/
-
-run.sh
-
-verify_*.py
+# 大文件数据（可选，如果太大）
+# data/*.csv
+# data/*.db

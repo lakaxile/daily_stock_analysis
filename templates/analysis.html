@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}综合分析 - 股票分析系统{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>📊 综合分析报告</h2>
+    <p class="subtitle">分析日期: {{ date }}</p>
+</div>
+
+<div class="content-wrapper">
+    {{ content|safe }}
+</div>
+{% endblock %}

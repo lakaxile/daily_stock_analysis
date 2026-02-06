@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}{{ code }} 股票分析{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>📈 个股分析 - {{ code }}</h2>
+    <p class="subtitle"><a href="/">← 返回首页</a></p>
+</div>
+
+<div class="content-wrapper">
+    {{ content|safe }}
+</div>
+{% endblock %}

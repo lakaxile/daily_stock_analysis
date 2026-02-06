@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}首页 - 股票分析系统{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h2>🎯 六维真强势选股策略</h2>
+    <p class="subtitle">技术扫描 + AI深度分析 = 精准选股</p>
+</div>
+
+<div class="dashboard">
+    <div class="card">
+        <h3>📅 最新选股 ({{ latest_date }})</h3>
+        {% if picks %}
+        <table class="stock-table">
+            <thead>
+                <tr>
+                    <th>股票代码</th>
+                    <th>股票名称</th>
+                    <th>技术评分</th>
+                    <th>操作建议</th>
+                    <th>详情</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stock in picks %}
+                <tr>
+                    <td><strong>{{ stock.code }}</strong></td>
+                    <td>{{ stock.name }}</td>
+                    <td><span class="badge badge-success">{{ stock.score }}/10</span></td>
+                    <td><span class="operation">{{ stock.operation_advice or '持有' }}</span></td>
+                    <td><a href="/stock/{{ stock.code }}" class="btn btn-sm">查看</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="empty-state">暂无选股数据</p>
+        {% endif %}
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon">🎯</div>
+            <div class="stat-content">
+                <h4>选股数量</h4>
+                <p class="stat-value">{{ picks|length }}</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">📊</div>
+            <div class="stat-content">
+                <h4>市场环境</h4>
+                <p class="stat-value">偏弱</p>
+                <p class="stat-desc">上证未站MA20</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🤖</div>
+            <div class="stat-content">
+                <h4>AI分析</h4>
+                <p class="stat-value">启用</p>
+                <p class="stat-desc">DeepSeek Chat</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>🚀 策略特点</h3>
+        <ul class="feature-list">
+            <li>✅ <strong>市场环境过滤</strong>：大盘偏弱时自动拦截，避免逆势操作</li>
+            <li>✅ <strong>六维技术评分</strong>：趋势、K线、量价、分时、盘口、尾盘综合打分</li>
+            <li>✅ <strong>AI深度分析</strong>：每只股票经过AI风险评估和操作建议</li>
+            <li>✅ <strong>动态调整</strong>：根据实盘表现持续优化策略</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>📈 策略改进历程</h3>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">2026-02-06</div>
+                <div class="timeline-content">
+                    <h4>✅ 市场环境过滤器</h4>
+                    <p>增加大盘环境检查，避免在弱势环境选股</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2026-02-05</div>
+                <div class="timeline-content">
+                    <h4>📊 策略回顾与改进</h4>
+                    <p>AI分析昨日选股全跌原因，提出5大改进建议</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2026-02-05</div>
+                <div class="timeline-content">
+                    <h4>🤖 AI综合分析</h4>
+                    <p>整合技术扫描结果，生成AI深度分析报告</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
