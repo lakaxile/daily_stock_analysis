@@ -5,3 +5,7 @@ gunicorn==21.2.0
 yfinance==0.2.37
 pandas==2.2.0
 numpy==1.26.4
+tenacity==8.2.3
+requests==2.31.0
+google-generativeai==0.3.2
+openai==1.12.0
