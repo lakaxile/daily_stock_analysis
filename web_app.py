@@ -175,5 +175,11 @@ def api_latest():
 
 
 if __name__ == '__main__':
-    # 开发环境
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    # 从环境变量获取端口，默认5000（Railway使用PORT环境变量）
+    import os
+    port = int(os.environ.get('PORT', 5000))
+    
+    # 生产环境关闭debug，开发环境开启
+    debug_mode = os.environ.get('FLASK_ENV') == 'development'
+    
+    app.run(debug=debug_mode, host='0.0.0.0', port=port)
