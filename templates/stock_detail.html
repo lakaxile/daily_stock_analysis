@@ -4,11 +4,125 @@
 
 {% block content %}
 <div class="page-header">
-    <h2>📈 个股分析 - {{ code }}</h2>
+    <h2>📈 个股深度分析 - {{ code }}</h2>
     <p class="subtitle"><a href="/">← 返回首页</a></p>
 </div>
 
+{% if error %}
 <div class="content-wrapper">
-    {{ content|safe }}
+    <div class="error-message">
+        <h3>⚠️ 分析失败</h3>
+        <p>{{ error }}</p>
+    </div>
 </div>
+{% elif data %}
+<div class="content-wrapper">
+    <!-- 股票基本信息 -->
+    <div class="card">
+        <h3>📊 {{ data.name }} ({{ data.code }})</h3>
+
+        <!-- 今日行情 -->
+        <div class="section">
+            <h4>💹 今日行情</h4>
+            <table class="data-table">
+                <tr>
+                    <th>昨日收盘</th>
+                    <td>¥{{ "%.2f"|format(data.yesterday_close) }}</td>
+                    <th>今日开盘</th>
+                    <td>¥{{ "%.2f"|format(data.today_open) }}</td>
+                </tr>
+                <tr>
+                    <th>今日最高</th>
+                    <td>¥{{ "%.2f"|format(data.today_high) }}</td>
+                    <th>今日最低</th>
+                    <td>¥{{ "%.2f"|format(data.today_low) }}</td>
+                </tr>
+                <tr>
+                    <th>今日收盘</th>
+                    <td>¥{{ "%.2f"|format(data.today_close) }}</td>
+                    <th>涨跌幅</th>
+                    <td class="{% if data.change_pct > 0 %}positive{% else %}negative{% endif %}">
+                        {{ "%+.2f"|format(data.change_pct) }}%
+                    </td>
+                </tr>
+                <tr>
+                    <th>振幅</th>
+                    <td>{{ "%.2f"|format(data.amplitude) }}%</td>
+                    <th>量比</th>
+                    <td>{{ "%.2f"|format(data.volume_ratio) }}x</td>
+                </tr>
+                <tr>
+                    <th>成交量</th>
+                    <td colspan="3">{{ "{:,.0f}".format(data.today_volume) }} 手</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- 技术指标 -->
+        <div class="section">
+            <h4>📈 技术指标</h4>
+            <table class="data-table">
+                <tr>
+                    <th>MA5</th>
+                    <td>¥{{ "%.2f"|format(data.ma5) }}
+                        {% if data.today_close > data.ma5 %}✅{% else %}❌{% endif %}
+                    </td>
+                    <th>MA10</th>
+                    <td>¥{{ "%.2f"|format(data.ma10) }}
+                        {% if data.today_close > data.ma10 %}✅{% else %}❌{% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>MA20</th>
+                    <td>¥{{ "%.2f"|format(data.ma20) }}
+                        {% if data.today_close > data.ma20 %}✅{% else %}❌{% endif %}
+                    </td>
+                    <th>均线排列</th>
+                    <td>
+                        {% if data.ma5 > data.ma10 and data.ma10 > data.ma20 %}
+                        ✅ 多头排列
+                        {% else %}
+                        ⚠️ 非多头排列
+                        {% endif %}
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- AI深度分析 -->
+        <div class="ai-analysis-box">
+            <h4>🤖 AI深度分析</h4>
+            <p>{{ data.ai_analysis }}</p>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="content-wrapper">
+    <p>正在加载数据...</p>
+</div>
+{% endif %}
+
+<style>
+    .section {
+        margin: 2rem 0;
+    }
+
+    .section h4 {
+        margin-bottom: 1rem;
+        color: var(--primary-color);
+        font-size: 1.2rem;
+    }
+
+    .error-message {
+        background: #fee;
+        border-left: 4px solid #c33;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+    }
+
+    .error-message h3 {
+        margin-bottom: 0.5rem;
+        color: #c33;
+    }
+</style>
 {% endblock %}

@@ -137,18 +137,93 @@ def review():
 
 @app.route('/stock/<code>')
 def stock_detail(code):
-    """个股详情"""
-    # 查找该股票的最新分析
-    pattern = os.path.join(DATA_DIR, f'stock_analysis_{code}_*.md')
-    matches = sorted(glob.glob(pattern), reverse=True)
-    
-    if not matches:
-        return "未找到该股票分析", 404
-    
-    with open(matches[0], 'r', encoding='utf-8') as f:
-        content = markdown.markdown(f.read(), extensions=['tables', 'fenced_code'])
-    
-    return render_template('stock_detail.html', content=content, code=code)
+    """个股详情 - 实时分析展示"""
+    try:
+        import sys
+        sys.path.insert(0, BASE_DIR)
+        
+        import yfinance as yf
+        from src.analyzer import GeminiAnalyzer
+        
+        # 确定股票后缀
+        ticker = f"{code}.SS" if code.startswith('6') else f"{code}.SZ"
+        
+        # 获取股票数据
+        stock = yf.Ticker(ticker)
+        hist = stock.history(period='60d')
+        
+        if len(hist) < 20:
+            return render_template('stock_detail.html', error= f"股票 {code} 数据不足", code=code)
+        
+        # 计算技术指标
+        today = hist.iloc[-1]
+        yesterday = hist.iloc[-2]
+        
+        hist['MA5'] = hist['Close'].rolling(window=5).mean()
+        hist['MA10'] = hist['Close'].rolling(window=10).mean()
+        hist['MA20'] = hist['Close'].rolling(window=20).mean()
+        hist['VOL_MA5'] = hist['Volume'].rolling(window=5).mean()
+        
+        # 提取数据
+        data = {
+            'code': code,
+            'name': stock.info.get('longName', code) if hasattr(stock, 'info') else code,
+            'yesterday_close': float(yesterday['Close']),
+            'today_open': float(today['Open']),
+            'today_high': float(today['High']),
+            'today_low': float(today['Low']),
+            'today_close': float(today['Close']),
+            'today_volume': float(today['Volume']),
+            'ma5': float(hist['MA5'].iloc[-1]),
+            'ma10': float(hist['MA10'].iloc[-1]),
+            'ma20': float(hist['MA20'].iloc[-1]),
+            'volume_ratio': float(today['Volume'] / hist['VOL_MA5'].iloc[-1]) if hist['VOL_MA5'].iloc[-1] > 0 else 0,
+        }
+        
+        # 计算衍生指标
+        data['change_pct'] = ((data['today_close'] - data['yesterday_close']) / data['yesterday_close']) * 100
+        data['amplitude'] = ((data['today_high'] - data['today_low']) / data['yesterday_close']) * 100
+        
+        if data['today_high'] != data['today_low']:
+            data['close_position'] = ((data['today_close'] - data['today_low']) / (data['today_high'] - data['today_low'])) * 100
+        else:
+            data['close_position'] = 50
+        
+        # AI分析
+        analyzer = GeminiAnalyzer()
+        if analyzer.is_available():
+            context = f"""
+请分析股票{data['name']}({code})：
+
+今日行情：昨收¥{data['yesterday_close']:.2f}，今开¥{data['today_open']:.2f}，今收¥{data['today_close']:.2f}，涨跌{data['change_pct']:+.2f}%，振幅{data['amplitude']:.2f}%，量比{data['volume_ratio']:.2f}x
+
+技术指标：MA5 ¥{data['ma5']:.2f}，MA10 ¥{data['ma10']:.2f}，MA20 ¥{data['ma20']:.2f}，{'多头排列' if data['ma5'] > data['ma10'] > data['ma20'] else '非多头排列'}
+
+请用简洁的语言（200字以内）回答：
+1. 技术形态：当前是强势/弱势/震荡？
+2. 操作建议：买入/观望/卖出？给出理由
+3. 风险提示：最大风险是什么？
+
+直接给出分析结果，不要JSON格式。
+"""
+            
+            generation_config = {
+                'temperature': 0.3,
+                'max_output_tokens': 512,
+            }
+            
+            try:
+                ai_response = analyzer._call_api_with_retry(context, generation_config)
+                data['ai_analysis'] = ai_response
+            except Exception as e:
+                data['ai_analysis'] = f'AI分析暂时不可用: {str(e)}'
+        else:
+            data['ai_analysis'] = 'AI分析未配置'
+        
+        return render_template('stock_detail.html', data=data, code=code)
+        
+    except Exception as e:
+        return render_template('stock_detail.html', error=str(e), code=code)
 
 
 @app.route('/api/watchlist')
