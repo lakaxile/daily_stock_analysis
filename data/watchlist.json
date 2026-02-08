@@ -1,26 +1,28 @@
 {
-  "2026-02-03": [
+  "2026-02-08": [
     {
-      "code": "300107",
-      "name": "建新股份",
-      "score": 85,
-      "trend": "强烈看多",
-      "operation_advice": "买入",
-      "added_date": "2026-02-03",
-      "last_check": "2026-02-03",
-      "status": "active",
-      "removal_reason": null
+      "code": "002345",
+      "name": "潮宏基",
+      "score": 8,
+      "change_pct": 9.98,
+      "price": 13.56,
+      "reason": "六维评分 8/10"
     },
     {
-      "code": "301588",
-      "name": "美新科技",
-      "score": 85,
-      "trend": "强烈看多",
-      "operation_advice": "买入",
-      "added_date": "2026-02-03",
-      "last_check": "2026-02-03",
-      "status": "active",
-      "removal_reason": null
+      "code": "300448",
+      "name": "浩云科技",
+      "score": 8,
+      "change_pct": 4.18,
+      "price": 9.96,
+      "reason": "六维评分 8/10"
+    },
+    {
+      "code": "300483",
+      "name": "首华燃气",
+      "score": 8,
+      "change_pct": 10.98,
+      "price": 17.08,
+      "reason": "六维评分 8/10"
     }
   ],
   "2026-02-05": [
@@ -77,6 +79,30 @@
       "operation_advice": "买入",
       "added_date": "2026-02-05",
       "last_check": "2026-02-05",
+      "status": "active",
+      "removal_reason": null
+    }
+  ],
+  "2026-02-03": [
+    {
+      "code": "300107",
+      "name": "建新股份",
+      "score": 85,
+      "trend": "强烈看多",
+      "operation_advice": "买入",
+      "added_date": "2026-02-03",
+      "last_check": "2026-02-03",
+      "status": "active",
+      "removal_reason": null
+    },
+    {
+      "code": "301588",
+      "name": "美新科技",
+      "score": 85,
+      "trend": "强烈看多",
+      "operation_advice": "买入",
+      "added_date": "2026-02-03",
+      "last_check": "2026-02-03",
       "status": "active",
       "removal_reason": null
     }
