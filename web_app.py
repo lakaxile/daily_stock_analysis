@@ -61,6 +61,28 @@ def get_latest_files():
     return files
 
 
+def get_available_report_dates():
+    """获取所有可用的综合分析报告日期"""
+    dates = set()
+    
+    # 扫描 comprehensive_analysis_*.md 和 daily_comprehensive_report_*.md
+    patterns = [
+        os.path.join(DATA_DIR, 'comprehensive_analysis_*.md'),
+        os.path.join(DATA_DIR, 'daily_comprehensive_report_*.md'),
+    ]
+    
+    for pattern in patterns:
+        for filepath in glob.glob(pattern):
+            # 从文件名提取日期
+            filename = os.path.basename(filepath)
+            match = re.search(r'(\d{4}-\d{2}-\d{2})', filename)
+            if match:
+                dates.add(match.group(1))
+    
+    # 按日期降序排序
+    return sorted(dates, reverse=True)
+
+
 def load_watchlist():
     """加载选股池"""
     watchlist_file = os.path.join(DATA_DIR, 'watchlist.json')
@@ -103,22 +125,38 @@ def strategy():
 
 @app.route('/analysis')
 def analysis():
-    """分析报告"""
-    files = get_latest_files()
+    """分析报告 - 支持按日期查看"""
+    from flask import request
+    
+    # 获取可用日期列表
+    available_dates = get_available_report_dates()
+    
+    # 获取请求的日期，默认最新
+    selected_date = request.args.get('date', available_dates[0] if available_dates else None)
     
     # 读取综合分析
     analysis_content = ""
-    if files['comprehensive_analysis']:
-        with open(files['comprehensive_analysis'], 'r', encoding='utf-8') as f:
-            content = f.read()
-            # 提取日期
-            date_match = re.search(r'\((\d{4}-\d{2}-\d{2})\)', content)
-            date = date_match.group(1) if date_match else '未知'
-            analysis_content = markdown.markdown(content, extensions=['tables', 'fenced_code'])
+    date = selected_date or '未知'
+    
+    if selected_date:
+        # 尝试两种文件名格式
+        possible_files = [
+            os.path.join(DATA_DIR, f'comprehensive_analysis_{selected_date}.md'),
+            os.path.join(DATA_DIR, f'daily_comprehensive_report_{selected_date}.md'),
+        ]
+        
+        for filepath in possible_files:
+            if os.path.exists(filepath):
+                with open(filepath, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                    analysis_content = markdown.markdown(content, extensions=['tables', 'fenced_code'])
+                break
     
     return render_template('analysis.html', 
                          content=analysis_content,
-                         date=date if 'date' in locals() else '未知')
+                         date=date,
+                         available_dates=available_dates,
+                         selected_date=selected_date)
 
 
 @app.route('/review')

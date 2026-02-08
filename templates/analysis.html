@@ -5,10 +5,64 @@
 {% block content %}
 <div class="page-header">
     <h2>📊 综合分析报告</h2>
-    <p class="subtitle">分析日期: {{ date }}</p>
+    <div class="date-selector">
+        <label for="report-date">选择日期：</label>
+        <select id="report-date" onchange="window.location.href='/analysis?date=' + this.value">
+            {% for d in available_dates %}
+            <option value="{{ d }}" {% if d==selected_date %}selected{% endif %}>{{ d }}</option>
+            {% endfor %}
+        </select>
+    </div>
 </div>
 
+<style>
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .date-selector {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .date-selector label {
+        font-weight: 500;
+        color: #666;
+    }
+
+    .date-selector select {
+        padding: 0.5rem 1rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 1rem;
+        background: white;
+        cursor: pointer;
+        transition: border-color 0.2s;
+    }
+
+    .date-selector select:hover {
+        border-color: #667eea;
+    }
+
+    .date-selector select:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+    }
+</style>
+
+{% if content %}
 <div class="content-wrapper">
     {{ content|safe }}
 </div>
+{% else %}
+<div class="no-content">
+    <p>📭 该日期没有综合分析报告</p>
+</div>
+{% endif %}
 {% endblock %}
