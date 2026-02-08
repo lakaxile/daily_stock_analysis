@@ -18,6 +18,73 @@ app.config['SECRET_KEY'] = 'your-secret-key-here'
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, 'data')
 
+# 导入股票名称映射
+try:
+    from src.analyzer import STOCK_NAME_MAP
+except ImportError:
+    STOCK_NAME_MAP = {}
+
+
+def is_contain_chinese(check_str):
+    """判断字符串是否包含中文字符"""
+    if not check_str:
+        return False
+    for ch in check_str:
+        if u'\u4e00' <= ch <= u'\u9fff':
+            return True
+    return False
+
+
+def get_chinese_stock_name(code):
+    """获取股票的中文名称"""
+    # 1. 先从STOCK_NAME_MAP查找
+    if code in STOCK_NAME_MAP:
+        return STOCK_NAME_MAP[code]
+    
+    # 2. 从watchlist.json查找
+    try:
+        watchlist_file = os.path.join(DATA_DIR, 'watchlist.json')
+        if os.path.exists(watchlist_file):
+            with open(watchlist_file, 'r', encoding='utf-8') as f:
+                watchlist = json.load(f)
+                for date_stocks in watchlist.values():
+                    for stock in date_stocks:
+                        if str(stock.get('code')) == str(code) and stock.get('name'):
+                            name = stock['name']
+                            if is_contain_chinese(name):
+                                return name
+    except Exception as e:
+        print(f"Error reading watchlist: {e}")
+    
+    # 3. 从CSV扫描结果查找
+    try:
+        import pandas as pd
+        # 获取最新的CSV文件
+        csv_files = sorted(glob.glob(os.path.join(DATA_DIR, 'six_dimension_scan_*.csv')), reverse=True)
+        for csv_file in csv_files:
+            try:
+                df = pd.read_csv(csv_file)
+                # 确保code列是字符串类型以便比较
+                df['code'] = df['code'].astype(str)
+                match = df[df['code'] == str(code)]
+                
+                if not match.empty:
+                    # 尝试获取 'name' 或 '股票名称' 列
+                    name = None
+                    if 'name' in df.columns:
+                        name = match.iloc[0]['name']
+                    elif '股票名称' in df.columns:
+                        name = match.iloc[0]['股票名称']
+                    
+                    if name and is_contain_chinese(str(name)):
+                        return name
+            except:
+                continue
+    except Exception as e:
+        print(f"Error reading CSV: {e}")
+    
+    return None
+
 
 def get_latest_files():
     """获取最新的分析文件"""
@@ -202,10 +269,16 @@ def stock_detail(code):
         hist['MA20'] = hist['Close'].rolling(window=20).mean()
         hist['VOL_MA5'] = hist['Volume'].rolling(window=5).mean()
         
+        # 获取中文股票名称
+        chinese_name = get_chinese_stock_name(code)
+        if not chinese_name:
+            # 回退到yfinance的名称
+            chinese_name = stock.info.get('longName', code) if hasattr(stock, 'info') else code
+        
         # 提取数据
         data = {
             'code': code,
-            'name': stock.info.get('longName', code) if hasattr(stock, 'info') else code,
+            'name': chinese_name,
             'yesterday_close': float(yesterday['Close']),
             'today_open': float(today['Open']),
             'today_high': float(today['High']),
