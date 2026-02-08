@@ -35,6 +35,35 @@ def is_contain_chinese(check_str):
     return False
 
 
+def get_stock_name_from_sina(code):
+    """从新浪财经获取股票中文名称"""
+    try:
+        import requests
+        # 判断市场前缀
+        prefix = 'sh' if code.startswith('6') else 'sz'
+        url = f"http://hq.sinajs.cn/list={prefix}{code}"
+        
+        # 设置Headers防止反爬
+        headers = {
+            'Referer': 'https://finance.sina.com.cn/',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+        }
+        
+        response = requests.get(url, headers=headers, timeout=2)
+        if response.status_code == 200:
+            content = response.text
+            # 格式: var hq_str_sh600897="厦门空港,18.850,..."
+            if '="' in content:
+                data_str = content.split('="')[1]
+                if data_str:
+                    name = data_str.split(',')[0]
+                    if is_contain_chinese(name):
+                        return name
+    except Exception as e:
+        print(f"Error fetching from Sina: {e}")
+    return None
+
+
 def get_chinese_stock_name(code):
     """获取股票的中文名称"""
     # 1. 先从STOCK_NAME_MAP查找
@@ -82,6 +111,11 @@ def get_chinese_stock_name(code):
                 continue
     except Exception as e:
         print(f"Error reading CSV: {e}")
+        
+    # 4. 从新浪财经尝试获取
+    sina_name = get_stock_name_from_sina(code)
+    if sina_name:
+        return sina_name
     
     return None
 
@@ -389,10 +423,16 @@ def api_analyze_stock(code):
         hist['MA20'] = hist['Close'].rolling(window=20).mean()
         hist['VOL_MA5'] = hist['Volume'].rolling(window=5).mean()
         
+        # 获取中文股票名称
+        chinese_name = get_chinese_stock_name(code)
+        if not chinese_name:
+            # 回退到yfinance的名称
+            chinese_name = stock.info.get('longName', code) if hasattr(stock, 'info') else code
+        
         # 提取数据
         data = {
             'code': code,
-            'name': stock.info.get('longName', code) if hasattr(stock, 'info') else code,
+            'name': chinese_name,
             'yesterday_close': float(yesterday['Close']),
             'today_open': float(today['Open']),
             'today_high': float(today['High']),
