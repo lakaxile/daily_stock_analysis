@@ -455,6 +455,65 @@ def api_latest():
                  for k, v in files.items()}
     })
 
+@app.route('/api/realtime')
+def api_realtime():
+    """API - 批量获取实时行情 (Sina Finance)"""
+    from flask import request as req
+    import requests as http_requests
+    
+    codes = req.args.get('codes', '')
+    if not codes:
+        return jsonify({})
+    
+    code_list = [c.strip() for c in codes.split(',') if c.strip()]
+    
+    # 构建 Sina 查询字符串
+    sina_codes = []
+    for code in code_list:
+        prefix = 'sh' if code.startswith('6') else 'sz'
+        sina_codes.append(f"{prefix}{code}")
+    
+    url = f"http://hq.sinajs.cn/list={','.join(sina_codes)}"
+    headers = {
+        'Referer': 'https://finance.sina.com.cn/',
+        'User-Agent': 'Mozilla/5.0'
+    }
+    
+    result = {}
+    try:
+        resp = http_requests.get(url, headers=headers, timeout=5)
+        if resp.status_code == 200:
+            for line in resp.text.strip().split('\n'):
+                if '="' not in line:
+                    continue
+                # 提取代码
+                var_part = line.split('="')[0]
+                sina_code = var_part.split('_')[-1]
+                raw_code = sina_code[2:]  # 去掉 sh/sz
+                
+                data_str = line.split('="')[1].rstrip('";')
+                if not data_str:
+                    continue
+                
+                fields = data_str.split(',')
+                if len(fields) >= 4:
+                    name = fields[0]
+                    current_price = float(fields[3]) if fields[3] else 0
+                    prev_close = float(fields[2]) if fields[2] else 0
+                    
+                    if prev_close > 0 and current_price > 0:
+                        change_pct = ((current_price - prev_close) / prev_close) * 100
+                        result[raw_code] = {
+                            'name': name,
+                            'price': round(current_price, 2),
+                            'prev_close': round(prev_close, 2),
+                            'change_pct': round(change_pct, 2),
+                        }
+    except Exception as e:
+        print(f"Sina API error: {e}")
+    
+    return jsonify(result)
+
 
 @app.route('/api/analyze/<code>')
 def api_analyze_stock(code):

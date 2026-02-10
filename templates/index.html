@@ -35,22 +35,26 @@
     <div class="card">
         <h3>📅 最新选股 ({{ latest_date }})</h3>
         {% if picks %}
-        <table class="stock-table">
+        <table class="stock-table" id="sixdim-table">
             <thead>
                 <tr>
                     <th>股票代码</th>
                     <th>股票名称</th>
                     <th>技术评分</th>
+                    <th>📈 实时涨跌</th>
                     <th>操作建议</th>
                     <th>详情</th>
                 </tr>
             </thead>
             <tbody>
                 {% for stock in picks %}
-                <tr>
+                <tr data-code="{{ stock.code }}">
                     <td><strong>{{ stock.code }}</strong></td>
                     <td>{{ stock.name }}</td>
                     <td><span class="badge badge-success">{{ stock.score }}/10</span></td>
+                    <td class="live-change" id="live-{{ stock.code }}">
+                        <span style="color: #888;">加载中...</span>
+                    </td>
                     <td><span class="operation">{{ stock.operation_advice or '持有' }}</span></td>
                     <td><a href="/stock/{{ stock.code }}" class="btn btn-sm">查看</a></td>
                 </tr>
@@ -67,25 +71,25 @@
         <h3>🌐 美股联动选股 ({{ us_latest_date or '暂无' }}) <a href="/us-strategy" style="font-size: 14px; float: right;">查看详情
                 →</a></h3>
         {% if us_picks %}
-        <table class="stock-table">
+        <table class="stock-table" id="us-table">
             <thead>
                 <tr>
                     <th>股票代码</th>
                     <th>股票名称</th>
                     <th>现价</th>
-                    <th>涨跌幅</th>
+                    <th>📈 实时涨跌</th>
                     <th>来源</th>
                     <th>详情</th>
                 </tr>
             </thead>
             <tbody>
                 {% for stock in us_picks %}
-                <tr>
+                <tr data-code="{{ stock.code }}">
                     <td><strong>{{ stock.code }}</strong></td>
                     <td>{{ stock.name }}</td>
-                    <td>¥{{ "%.2f"|format(stock.price) }}</td>
-                    <td style="color: {{ '#4ecb71' if stock.change_pct > 0 else '#ff6b6b' }}">
-                        {{ "%+.2f"|format(stock.change_pct) }}%
+                    <td class="live-price" id="price-{{ stock.code }}">¥{{ "%.2f"|format(stock.price) }}</td>
+                    <td class="live-change" id="live-{{ stock.code }}">
+                        <span style="color: #888;">加载中...</span>
                     </td>
                     <td><span class="badge" style="background: linear-gradient(135deg, #667eea, #764ba2);">{{
                             stock.reason }}</span></td>
@@ -162,4 +166,41 @@
         </div>
     </div>
 </div>
+
+<script>
+    // 实时行情自动刷新
+    function fetchRealtimeQuotes() {
+        const rows = document.querySelectorAll('tr[data-code]');
+        if (!rows.length) return;
+
+        const codes = [...new Set([...rows].map(r => r.dataset.code))];
+
+        fetch('/api/realtime?codes=' + codes.join(','))
+            .then(r => r.json())
+            .then(data => {
+                for (const [code, info] of Object.entries(data)) {
+                    // 更新实时涨跌幅
+                    const cell = document.getElementById('live-' + code);
+                    if (cell) {
+                        const color = info.change_pct > 0 ? '#4ecb71' : (info.change_pct < 0 ? '#ff6b6b' : '#ccc');
+                        const arrow = info.change_pct > 0 ? '▲' : (info.change_pct < 0 ? '▼' : '—');
+                        cell.innerHTML = `<span style="color:${color};font-weight:bold;">${arrow} ${info.change_pct > 0 ? '+' : ''}${info.change_pct.toFixed(2)}%</span><br><small style="color:#999;">¥${info.price.toFixed(2)}</small>`;
+                    }
+                    // 更新现价列 (US表)
+                    const priceCell = document.getElementById('price-' + code);
+                    if (priceCell) {
+                        priceCell.textContent = '¥' + info.price.toFixed(2);
+                    }
+                }
+                // 更新时间戳
+                const ts = document.getElementById('realtime-ts');
+                if (ts) ts.textContent = '最后更新: ' + new Date().toLocaleTimeString('zh-CN');
+            })
+            .catch(err => console.warn('实时行情获取失败:', err));
+    }
+
+    // 首次加载 + 每10秒刷新
+    fetchRealtimeQuotes();
+    setInterval(fetchRealtimeQuotes, 10000);
+</script>
 {% endblock %}
