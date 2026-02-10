@@ -1,4 +1,158 @@
 {
+  "2026-02-10": [
+    {
+      "code": "000156",
+      "name": "华数传媒",
+      "score": 9,
+      "change_pct": 9.96,
+      "price": 9.83,
+      "reason": "六维评分 9/10"
+    },
+    {
+      "code": "000582",
+      "name": "北部湾港",
+      "score": 9,
+      "change_pct": 1.85,
+      "price": 9.89,
+      "reason": "六维评分 9/10"
+    },
+    {
+      "code": "000681",
+      "name": "视觉中国",
+      "score": 9,
+      "change_pct": 9.99,
+      "price": 30.49,
+      "reason": "六维评分 9/10"
+    },
+    {
+      "code": "000703",
+      "name": "恒逸石化",
+      "score": 9,
+      "change_pct": 2.78,
+      "price": 13.33,
+      "reason": "六维评分 9/10"
+    },
+    {
+      "code": "000801",
+      "name": "四川九洲",
+      "score": 9,
+      "change_pct": 2.54,
+      "price": 16.17,
+      "reason": "六维评分 9/10"
+    },
+    {
+      "code": "300133",
+      "name": "华策影视",
+      "score": 9,
+      "change_pct": 17.71,
+      "price": 11.23,
+      "reason": "六维评分 9/10"
+    },
+    {
+      "code": "300533",
+      "name": "冰川网络",
+      "score": 9,
+      "change_pct": 4.22,
+      "price": 36.31,
+      "reason": "六维评分 9/10"
+    },
+    {
+      "code": "300528",
+      "name": "幸福蓝海",
+      "score": 9,
+      "change_pct": 20.0,
+      "price": 29.46,
+      "reason": "六维评分 9/10"
+    },
+    {
+      "code": "000157",
+      "name": "中联重科",
+      "score": 8,
+      "change_pct": 0.73,
+      "price": 9.68,
+      "reason": "六维评分 8/10"
+    },
+    {
+      "code": "000425",
+      "name": "徐工机械",
+      "score": 8,
+      "change_pct": 0.76,
+      "price": 11.95,
+      "reason": "六维评分 8/10"
+    },
+    {
+      "code": "000559",
+      "name": "万向钱潮",
+      "score": 8,
+      "change_pct": 10.03,
+      "price": 19.53,
+      "reason": "六维评分 8/10"
+    },
+    {
+      "code": "000668",
+      "name": "*ST荣控",
+      "score": 8,
+      "change_pct": 3.13,
+      "price": 14.5,
+      "reason": "六维评分 8/10"
+    },
+    {
+      "code": "000719",
+      "name": "中原传媒",
+      "score": 8,
+      "change_pct": 2.71,
+      "price": 13.63,
+      "reason": "六维评分 8/10"
+    },
+    {
+      "code": "000818",
+      "name": "航锦科技",
+      "score": 8,
+      "change_pct": 10.01,
+      "price": 23.62,
+      "reason": "六维评分 8/10"
+    },
+    {
+      "code": "000951",
+      "name": "中国重汽",
+      "score": 8,
+      "change_pct": 0.7,
+      "price": 20.14,
+      "reason": "六维评分 8/10"
+    },
+    {
+      "code": "300257",
+      "name": "开山股份",
+      "score": 8,
+      "change_pct": 4.01,
+      "price": 18.68,
+      "reason": "六维评分 8/10"
+    },
+    {
+      "code": "300512",
+      "name": "中亚股份",
+      "score": 8,
+      "change_pct": 1.44,
+      "price": 10.58,
+      "reason": "六维评分 8/10"
+    },
+    {
+      "code": "300819",
+      "name": "聚杰微纤",
+      "score": 8,
+      "change_pct": 4.06,
+      "price": 43.8,
+      "reason": "六维评分 8/10"
+    },
+    {
+      "code": "600150",
+      "name": "中国船舶",
+      "score": 8,
+      "change_pct": 2.08,
+      "price": 34.8,
+      "reason": "六维评分 8/10"
+    }
+  ],
   "2026-02-08": [
     {
       "code": "002345",
