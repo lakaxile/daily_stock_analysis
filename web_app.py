@@ -200,13 +200,20 @@ def index():
     files = get_latest_files()
     watchlist = load_watchlist()
     
-    # 获取最新选股
+    # 获取最新选股（六维策略）
     latest_date = max(watchlist.keys()) if watchlist else None
     latest_picks = watchlist.get(latest_date, []) if latest_date else []
+    
+    # 获取美股联动选股
+    us_watchlist = load_us_watchlist()
+    us_latest_date = max(us_watchlist.keys()) if us_watchlist else None
+    us_picks = us_watchlist.get(us_latest_date, []) if us_latest_date else []
     
     return render_template('index.html', 
                          latest_date=latest_date,
                          picks=latest_picks,
+                         us_latest_date=us_latest_date,
+                         us_picks=us_picks,
                          files=files)
 
 
@@ -256,6 +263,61 @@ def analysis():
     return render_template('analysis.html', 
                          content=analysis_content,
                          date=date,
+                         available_dates=available_dates,
+                         selected_date=selected_date)
+
+
+def load_us_watchlist():
+    """加载美股联动选股池"""
+    filepath = os.path.join(DATA_DIR, 'us_watchlist.json')
+    if os.path.exists(filepath):
+        with open(filepath, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    return {}
+
+
+def get_us_report_dates():
+    """获取美股联动报告可用日期"""
+    pattern = os.path.join(DATA_DIR, 'us_sector_report_*.md')
+    files = glob.glob(pattern)
+    dates = []
+    for f in files:
+        basename = os.path.basename(f)
+        date_str = basename.replace('us_sector_report_', '').replace('.md', '')
+        dates.append(date_str)
+    dates.sort(reverse=True)
+    return dates
+
+
+@app.route('/us-strategy')
+def us_strategy():
+    """美股联动选股"""
+    from flask import request
+
+    us_watchlist = load_us_watchlist()
+    available_dates = get_us_report_dates()
+
+    # 也从 watchlist 的 keys 中补充日期
+    for d in us_watchlist.keys():
+        if d not in available_dates:
+            available_dates.append(d)
+    available_dates = sorted(list(set(available_dates)), reverse=True)
+
+    selected_date = request.args.get('date', available_dates[0] if available_dates else None)
+
+    picks = us_watchlist.get(selected_date, []) if selected_date else []
+
+    # 读取对应日期的报告
+    report_content = ""
+    if selected_date:
+        report_file = os.path.join(DATA_DIR, f'us_sector_report_{selected_date}.md')
+        if os.path.exists(report_file):
+            with open(report_file, 'r', encoding='utf-8') as f:
+                report_content = markdown.markdown(f.read(), extensions=['tables', 'fenced_code'])
+
+    return render_template('us_strategy.html',
+                         picks=picks,
+                         report_content=report_content,
                          available_dates=available_dates,
                          selected_date=selected_date)
 

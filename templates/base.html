@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}股票分析系统{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
+
 <body>
     <nav class="navbar">
         <div class="container">
@@ -16,6 +18,8 @@
                 <li><a href="/" class="{% if request.endpoint == 'index' %}active{% endif %}">首页</a></li>
                 <li><a href="/strategy" class="{% if request.endpoint == 'strategy' %}active{% endif %}">选股策略</a></li>
                 <li><a href="/analysis" class="{% if request.endpoint == 'analysis' %}active{% endif %}">综合分析</a></li>
+                <li><a href="/us-strategy" class="{% if request.endpoint == 'us_strategy' %}active{% endif %}">🌐
+                        美股联动</a></li>
                 <li><a href="/review" class="{% if request.endpoint == 'review' %}active{% endif %}">策略回顾</a></li>
             </ul>
         </div>
@@ -33,4 +37,5 @@
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
+
 </html>

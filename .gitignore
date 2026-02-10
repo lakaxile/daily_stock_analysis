@@ -53,3 +53,9 @@ temp/
 # 大文件数据（可选，如果太大）
 # data/*.csv
 # data/*.db
+# Large Scan Logs
+*_log.txt
+*_v2.txt
+*scan_log*.txt
+*filter_result*.txt
+full_scan_log.txt

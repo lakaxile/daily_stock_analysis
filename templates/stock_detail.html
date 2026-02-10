@@ -4,7 +4,11 @@
 
 {% block content %}
 <div class="page-header">
+    {% if data %}
+    <h2>📈 个股深度分析 - {{ data.name }} ({{ code }})</h2>
+    {% else %}
     <h2>📈 个股深度分析 - {{ code }}</h2>
+    {% endif %}
     <p class="subtitle"><a href="/">← 返回首页</a></p>
 </div>
 

@@ -62,6 +62,43 @@
         {% endif %}
     </div>
 
+    <!-- 美股联动选股 -->
+    <div class="card">
+        <h3>🌐 美股联动选股 ({{ us_latest_date or '暂无' }}) <a href="/us-strategy" style="font-size: 14px; float: right;">查看详情
+                →</a></h3>
+        {% if us_picks %}
+        <table class="stock-table">
+            <thead>
+                <tr>
+                    <th>股票代码</th>
+                    <th>股票名称</th>
+                    <th>现价</th>
+                    <th>涨跌幅</th>
+                    <th>来源</th>
+                    <th>详情</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stock in us_picks %}
+                <tr>
+                    <td><strong>{{ stock.code }}</strong></td>
+                    <td>{{ stock.name }}</td>
+                    <td>¥{{ "%.2f"|format(stock.price) }}</td>
+                    <td style="color: {{ '#4ecb71' if stock.change_pct > 0 else '#ff6b6b' }}">
+                        {{ "%+.2f"|format(stock.change_pct) }}%
+                    </td>
+                    <td><span class="badge" style="background: linear-gradient(135deg, #667eea, #764ba2);">{{
+                            stock.reason }}</span></td>
+                    <td><a href="/stock/{{ stock.code }}" class="btn btn-sm">查看</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="empty-state">暂无数据，策略将在每日 05:30 自动执行</p>
+        {% endif %}
+    </div>
+
     <div class="stats-grid">
         <div class="stat-card">
             <div class="stat-icon">🎯</div>

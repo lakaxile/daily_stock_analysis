@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}美股联动选股 - 股票分析系统{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h2>🌐 美股-A股联动策略</h2>
+    <p class="subtitle">跟踪美股板块热度，捕捉A股联动机会</p>
+</div>
+
+<div class="dashboard">
+    <!-- 日期选择 -->
+    {% if available_dates %}
+    <div class="card" style="padding: 15px; margin-bottom: 20px;">
+        <form method="get" style="display: flex; align-items: center; gap: 10px;">
+            <label><strong>📅 选择日期:</strong></label>
+            <select name="date" onchange="this.form.submit()"
+                style="padding: 8px 12px; border-radius: 6px; border: 1px solid #444; background: #1a1a2e; color: #eee; font-size: 14px;">
+                {% for d in available_dates %}
+                <option value="{{ d }}" {% if d==selected_date %}selected{% endif %}>{{ d }}</option>
+                {% endfor %}
+            </select>
+        </form>
+    </div>
+    {% endif %}
+
+    <!-- 推荐列表 -->
+    <div class="card">
+        <h3>🎯 美股联动推荐 ({{ selected_date or '暂无' }})</h3>
+        {% if picks %}
+        <table class="stock-table">
+            <thead>
+                <tr>
+                    <th>股票代码</th>
+                    <th>股票名称</th>
+                    <th>现价</th>
+                    <th>涨跌幅</th>
+                    <th>来源</th>
+                    <th>详情</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stock in picks %}
+                <tr>
+                    <td><strong>{{ stock.code }}</strong></td>
+                    <td>{{ stock.name }}</td>
+                    <td>¥{{ "%.2f"|format(stock.price) }}</td>
+                    <td style="color: {{ '#4ecb71' if stock.change_pct > 0 else '#ff6b6b' }}">
+                        {{ "%+.2f"|format(stock.change_pct) }}%
+                    </td>
+                    <td><span class="badge" style="background: linear-gradient(135deg, #667eea, #764ba2);">{{
+                            stock.reason }}</span></td>
+                    <td><a href="/stock/{{ stock.code }}" class="btn btn-sm">查看</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="empty-state">暂无推荐数据。策略将在每日 05:30 自动执行。</p>
+        {% endif %}
+    </div>
+
+    <!-- 分析报告 -->
+    {% if report_content %}
+    <div class="card">
+        <h3>📊 板块分析报告</h3>
+        <div class="report-content">
+            {{ report_content|safe }}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- 策略说明 -->
+    <div class="card">
+        <h3>📝 策略逻辑</h3>
+        <ul class="feature-list">
+            <li>🇺🇸 <strong>美股板块扫描</strong>：每日追踪S&P 11大板块ETF涨跌</li>
+            <li>🔗 <strong>跨市联动映射</strong>：将热门美股板块映射到A股对应行业</li>
+            <li>📈 <strong>技术面初筛</strong>：MA5趋势向上 + 量比 + 成交额过滤</li>
+            <li>🤖 <strong>AI精选推荐</strong>：综合板块关联度与技术强度，精选5-8只</li>
+            <li>⏰ <strong>自动执行</strong>：每日05:30（美股收盘后）自动运行</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

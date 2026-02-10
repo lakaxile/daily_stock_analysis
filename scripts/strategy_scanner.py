@@ -21,6 +21,51 @@ import time
 logging.basicConfig(level=logging.INFO, format='%(message)s')
 logger = logging.getLogger(__name__)
 
+# 尝试导入股票名称映射
+try:
+    from src.analyzer import STOCK_NAME_MAP
+except ImportError:
+    STOCK_NAME_MAP = {}
+
+
+def is_contain_chinese(check_str):
+    """判断字符串是否包含中文字符"""
+    if not check_str:
+        return False
+    for ch in check_str:
+        if u'\u4e00' <= ch <= u'\u9fff':
+            return True
+    return False
+
+
+def get_stock_name_from_sina(code):
+    """从新浪财经获取股票中文名称"""
+    try:
+        import requests
+        # 判断市场前缀
+        prefix = 'sh' if code.startswith('6') else 'sz'
+        url = f"http://hq.sinajs.cn/list={prefix}{code}"
+        
+        # 设置Headers防止反爬
+        headers = {
+            'Referer': 'https://finance.sina.com.cn/',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+        }
+        
+        response = requests.get(url, headers=headers, timeout=2)
+        if response.status_code == 200:
+            content = response.text
+            # 格式: var hq_str_sh600897="厦门空港,18.850,..."
+            if '="' in content:
+                data_str = content.split('="')[1]
+                if data_str:
+                    name = data_str.split(',')[0]
+                    if is_contain_chinese(name):
+                        return name
+    except Exception as e:
+        pass
+    return None
+
 
 class SixDimensionScanner:
     """六维真强势策略扫描器"""
@@ -214,14 +259,31 @@ class SixDimensionScanner:
             amplitude = ((high - low) / prev_close) * 100
             
             # 获取股票名称
-            try:
-                info = stock.info
-                name = info.get('longName', '') or info.get('shortName', '') or f'股票{code}'
-                # 简化中文名称
-                if len(name) > 20:
-                    name = name[:20]
-            except:
-                name = f'股票{code}'
+            # 获取股票名称
+            name = f'股票{code}'
+            
+            # 1. 尝试从映射获取
+            if code in STOCK_NAME_MAP:
+                name = STOCK_NAME_MAP[code]
+            
+            # 2. 尝试从新浪获取
+            if name.startswith('股票') or not is_contain_chinese(name):
+                sina_name = get_stock_name_from_sina(code)
+                if sina_name:
+                    name = sina_name
+            
+            # 3. 最后尝试Yahoo
+            if name.startswith('股票') or not is_contain_chinese(name):
+                try:
+                    info = stock.info
+                    y_name = info.get('longName', '') or info.get('shortName', '')
+                    if y_name:
+                        name = y_name
+                        # 简化中文名称
+                        if len(name) > 20:
+                            name = name[:20]
+                except:
+                    pass
             
             return {
                 'code': code,
