@@ -322,6 +322,40 @@ def us_strategy():
                          selected_date=selected_date)
 
 
+def get_fund_flow_dates():
+    """获取资金流向报告可用日期"""
+    pattern = os.path.join(DATA_DIR, 'fund_flow_report_*.md')
+    files = glob.glob(pattern)
+    dates = []
+    for f in files:
+        basename = os.path.basename(f)
+        date_str = basename.replace('fund_flow_report_', '').replace('.md', '')
+        dates.append(date_str)
+    dates.sort(reverse=True)
+    return dates
+
+
+@app.route('/fund-flow')
+def fund_flow():
+    """资金流向策略页面"""
+    from flask import request
+    
+    available_dates = get_fund_flow_dates()
+    selected_date = request.args.get('date', available_dates[0] if available_dates else None)
+    
+    report_content = ""
+    if selected_date:
+        report_file = os.path.join(DATA_DIR, f'fund_flow_report_{selected_date}.md')
+        if os.path.exists(report_file):
+            with open(report_file, 'r', encoding='utf-8') as f:
+                report_content = markdown.markdown(f.read(), extensions=['tables', 'fenced_code'])
+                
+    return render_template('fund_flow.html',
+                         report_content=report_content,
+                         available_dates=available_dates,
+                         selected_date=selected_date)
+
+
 @app.route('/review')
 def review():
     """策略回顾"""

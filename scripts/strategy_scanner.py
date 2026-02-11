@@ -289,6 +289,7 @@ class SixDimensionScanner:
                 'code': code,
                 'name': name,
                 'close': close,
+                'prev_close': prev_close,
                 'open': open_price,
                 'high': high,
                 'low': low,
@@ -312,6 +313,26 @@ class SixDimensionScanner:
         except Exception as e:
             return None
     
+    def calc_buy_zone(self, data: Dict) -> Tuple[float, str]:
+        """计算建议低吸区间"""
+        ma5 = data.get('ma5', 0)
+        prev_close = data.get('prev_close', 0)
+        if ma5 == 0 or prev_close == 0:
+            return 0.0, "数据不足"
+        
+        # 策略: 强势股回调MA5或水下3%
+        buy_price = max(ma5, prev_close * 0.97)
+        return buy_price, f"建议 {buy_price:.2f} 以下低吸"
+
+    def check_overheat(self, data: Dict) -> bool:
+        """检查是否过热 (乖离率过大)"""
+        close = data.get('close', 0)
+        ma5 = data.get('ma5', 0)
+        if ma5 == 0: return False
+        
+        bias_5 = (close - ma5) / ma5 * 100
+        return bias_5 > 15
+
     def calculate_six_dimensions(self, data: Dict) -> Tuple[int, Dict]:
         """
         计算六维评分
@@ -321,6 +342,11 @@ class SixDimensionScanner:
         """
         score = 0
         details = {}
+        
+        # 0. 过热检查 (新增)
+        if self.check_overheat(data):
+            score -= 2
+            details['风险'] = "⚠️ 短线过热 (乖离率>15%) -2"
         
         # 1. 趋势维度 (0-2分)
         trend_score = 0
@@ -387,6 +413,10 @@ class SixDimensionScanner:
         else:
             details['尾盘'] = f"❌ 收于低位{data['close_position']:.0f}% (0)"
         score += closing_score
+        
+        # 计算并保存低吸区间 (不影响分数，但存入details供参考)
+        buy_price, buy_desc = self.calc_buy_zone(data)
+        details['建议'] = buy_desc
         
         return score, details
     

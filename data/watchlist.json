@@ -1,4 +1,114 @@
 {
+  "2026-02-11": [
+    {
+      "code": "300165",
+      "name": "ST天瑞",
+      "score": 10,
+      "change_pct": 2.74,
+      "price": 5.62,
+      "reason": "六维评分 10/10",
+      "buy_zone": "建议 5.35 以下低吸"
+    },
+    {
+      "code": "000818",
+      "name": "航锦科技",
+      "score": 9,
+      "change_pct": 0.59,
+      "price": 23.76,
+      "reason": "六维评分 9/10",
+      "buy_zone": "建议 22.91 以下低吸"
+    },
+    {
+      "code": "000833",
+      "name": "粤桂股份",
+      "score": 9,
+      "change_pct": 5.15,
+      "price": 20.42,
+      "reason": "六维评分 9/10",
+      "buy_zone": "建议 19.59 以下低吸"
+    },
+    {
+      "code": "002248",
+      "name": "华东数控",
+      "score": 9,
+      "change_pct": 3.07,
+      "price": 12.74,
+      "reason": "六维评分 9/10",
+      "buy_zone": "建议 12.33 以下低吸"
+    },
+    {
+      "code": "603370",
+      "name": "华新精科",
+      "score": 9,
+      "change_pct": 2.94,
+      "price": 51.44,
+      "reason": "六维评分 9/10",
+      "buy_zone": "建议 49.95 以下低吸"
+    },
+    {
+      "code": "000657",
+      "name": "中钨高新",
+      "score": 8,
+      "change_pct": 10.0,
+      "price": 52.37,
+      "reason": "六维评分 8/10",
+      "buy_zone": "建议 48.13 以下低吸"
+    },
+    {
+      "code": "000688",
+      "name": "国城矿业",
+      "score": 8,
+      "change_pct": 9.07,
+      "price": 31.01,
+      "reason": "六维评分 8/10",
+      "buy_zone": "建议 28.27 以下低吸"
+    },
+    {
+      "code": "000877",
+      "name": "天山股份",
+      "score": 8,
+      "change_pct": 1.87,
+      "price": 5.45,
+      "reason": "六维评分 8/10",
+      "buy_zone": "建议 5.32 以下低吸"
+    },
+    {
+      "code": "000909",
+      "name": "ST数源",
+      "score": 8,
+      "change_pct": 4.17,
+      "price": 5.75,
+      "reason": "六维评分 8/10",
+      "buy_zone": "建议 5.56 以下低吸"
+    },
+    {
+      "code": "000951",
+      "name": "中国重汽",
+      "score": 8,
+      "change_pct": 1.74,
+      "price": 20.49,
+      "reason": "六维评分 8/10",
+      "buy_zone": "建议 19.87 以下低吸"
+    },
+    {
+      "code": "002299",
+      "name": "圣农发展",
+      "score": 8,
+      "change_pct": 1.79,
+      "price": 18.78,
+      "reason": "六维评分 8/10",
+      "buy_zone": "建议 18.18 以下低吸"
+    },
+    {
+      "code": "002800",
+      "name": "天顺股份",
+      "score": 8,
+      "change_pct": 4.46,
+      "price": 20.59,
+      "reason": "六维评分 8/10",
+      "buy_zone": "建议 19.12 以下低吸"
+    }
+  ],
   "2026-02-10": [
     {
       "code": "000156",

@@ -1,0 +1,224 @@
+{
+  "2026-02-11": [
+    {
+      "rank": 1,
+      "code": "BK1027",
+      "name": "小金属",
+      "net_inflow": 4187177216.0,
+      "change_pct": 3.25,
+      "stocks": [
+        {
+          "code": "600111",
+          "name": "北方稀土",
+          "price": 56.31,
+          "change_pct": 5.02,
+          "net_inflow": 1499148848.0
+        },
+        {
+          "code": "000657",
+          "name": "中钨高新",
+          "price": 52.37,
+          "change_pct": 10.0,
+          "net_inflow": 736297792.0
+        },
+        {
+          "code": "603993",
+          "name": "洛阳钼业",
+          "price": 23.21,
+          "change_pct": 2.93,
+          "net_inflow": 584794912.0
+        },
+        {
+          "code": "002378",
+          "name": "章源钨业",
+          "price": 27.64,
+          "change_pct": 9.99,
+          "net_inflow": 398750238.0
+        },
+        {
+          "code": "600549",
+          "name": "厦门钨业",
+          "price": 62.05,
+          "change_pct": 7.54,
+          "net_inflow": 393429872.0
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "code": "BK0546",
+      "name": "玻璃玻纤",
+      "net_inflow": 2943439552.0,
+      "change_pct": 4.68,
+      "stocks": [
+        {
+          "code": "603601",
+          "name": "再升科技",
+          "price": 12.1,
+          "change_pct": 10.0,
+          "net_inflow": 815806128.0
+        },
+        {
+          "code": "002080",
+          "name": "中材科技",
+          "price": 45.34,
+          "change_pct": 10.0,
+          "net_inflow": 479407308.0
+        },
+        {
+          "code": "301526",
+          "name": "国际复材",
+          "price": 11.8,
+          "change_pct": 20.04,
+          "net_inflow": 428368912.0
+        },
+        {
+          "code": "600176",
+          "name": "中国巨石",
+          "price": 25.65,
+          "change_pct": 9.99,
+          "net_inflow": 404969072.0
+        },
+        {
+          "code": "002201",
+          "name": "九鼎新材",
+          "price": 13.76,
+          "change_pct": 6.42,
+          "net_inflow": 342672989.0
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "code": "BK1015",
+      "name": "能源金属",
+      "net_inflow": 2924805264.0,
+      "change_pct": 4.23,
+      "stocks": [
+        {
+          "code": "002340",
+          "name": "格林美",
+          "price": 9.5,
+          "change_pct": 9.95,
+          "net_inflow": 1426364256.0
+        },
+        {
+          "code": "603799",
+          "name": "华友钴业",
+          "price": 73.35,
+          "change_pct": 5.45,
+          "net_inflow": 531116832.0
+        },
+        {
+          "code": "002466",
+          "name": "天齐锂业",
+          "price": 51.15,
+          "change_pct": 1.91,
+          "net_inflow": 252898012.0
+        },
+        {
+          "code": "002460",
+          "name": "赣锋锂业",
+          "price": 66.65,
+          "change_pct": 2.49,
+          "net_inflow": 244144592.0
+        },
+        {
+          "code": "002240",
+          "name": "盛新锂能",
+          "price": 37.42,
+          "change_pct": 5.2,
+          "net_inflow": 185971037.0
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "code": "BK0478",
+      "name": "有色金属",
+      "net_inflow": 2448143360.0,
+      "change_pct": 1.3,
+      "stocks": [
+        {
+          "code": "601899",
+          "name": "紫金矿业",
+          "price": 39.48,
+          "change_pct": 1.73,
+          "net_inflow": 910210416.0
+        },
+        {
+          "code": "601600",
+          "name": "中国铝业",
+          "price": 13.32,
+          "change_pct": 1.29,
+          "net_inflow": 205424544.0
+        },
+        {
+          "code": "000426",
+          "name": "兴业银锡",
+          "price": 50.39,
+          "change_pct": 1.55,
+          "net_inflow": 178441904.0
+        },
+        {
+          "code": "601168",
+          "name": "XD西部矿",
+          "price": 32.66,
+          "change_pct": 2.64,
+          "net_inflow": 169110540.0
+        },
+        {
+          "code": "600362",
+          "name": "江西铜业",
+          "price": 56.47,
+          "change_pct": 1.56,
+          "net_inflow": 153213920.0
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "code": "BK0732",
+      "name": "贵金属",
+      "net_inflow": 973092016.0,
+      "change_pct": 1.96,
+      "stocks": [
+        {
+          "code": "600489",
+          "name": "中金黄金",
+          "price": 30.67,
+          "change_pct": 2.34,
+          "net_inflow": 373978320.0
+        },
+        {
+          "code": "600988",
+          "name": "赤峰黄金",
+          "price": 38.22,
+          "change_pct": 3.92,
+          "net_inflow": 308549712.0
+        },
+        {
+          "code": "600547",
+          "name": "山东黄金",
+          "price": 47.35,
+          "change_pct": 4.76,
+          "net_inflow": 139877152.0
+        },
+        {
+          "code": "601069",
+          "name": "西部黄金",
+          "price": 35.09,
+          "change_pct": 1.59,
+          "net_inflow": 108016520.0
+        },
+        {
+          "code": "300139",
+          "name": "晓程科技",
+          "price": 59.47,
+          "change_pct": 2.39,
+          "net_inflow": 89573860.0
+        }
+      ]
+    }
+  ]
+}

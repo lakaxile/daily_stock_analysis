@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}资金流向策略 - 股票分析系统{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h2>💸 资金流向策略</h2>
+    <p class="subtitle">这跟随主力资金流向，捕捉市场最强风口</p>
+</div>
+
+<div class="dashboard">
+    <!-- 日期选择 -->
+    {% if available_dates %}
+    <div class="card" style="padding: 15px; margin-bottom: 20px;">
+        <form method="get" style="display: flex; align-items: center; gap: 10px;">
+            <label><strong>📅 选择日期:</strong></label>
+            <select name="date" onchange="this.form.submit()"
+                style="padding: 8px 12px; border-radius: 6px; border: 1px solid #444; background: #1a1a2e; color: #eee; font-size: 14px;">
+                {% for d in available_dates %}
+                <option value="{{ d }}" {% if d==selected_date %}selected{% endif %}>{{ d }}</option>
+                {% endfor %}
+            </select>
+        </form>
+    </div>
+    {% endif %}
+
+    <!-- 分析报告 -->
+    <div class="card">
+        <h3>📊 资金流向分析报告 ({{ selected_date or '暂无' }})</h3>
+        {% if report_content %}
+        <div class="report-content">
+            {{ report_content|safe }}
+        </div>
+        {% else %}
+        <p class="empty-state">暂无报告数据。</p>
+        {% endif %}
+    </div>
+
+    <!-- 策略说明 -->
+    <div class="card">
+        <h3>📝 策略逻辑</h3>
+        <ul class="feature-list">
+            <li>🌊 <strong>板块主力净流入</strong>：实时扫描全市场行业板块，按主力净流入金额排序。</li>
+            <li>🔝 <strong>锁定Top 5板块</strong>：只关注资金介入最深的板块（如"小金属"、"能源金属"）。</li>
+            <li>🐲 <strong>龙头精选</strong>：在热门板块内，精选净流入前5的个股。</li>
+            <li>🛡️ <strong>过滤垃圾股</strong>：剔除ST、低价、无量个股。</li>
+            <li>🚀 <strong>核心逻辑</strong>：资金是市场的推手，跟随大资金是最确定的套利方式。</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

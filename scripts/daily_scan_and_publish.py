@@ -119,7 +119,9 @@ def update_watchlist(results):
             "score": int(s['six_dim_score']),
             "change_pct": round(float(s.get('change_pct', 0)), 2),
             "price": round(float(s.get('close', 0)), 2),
-            "reason": f"六维评分 {int(s['six_dim_score'])}/10"
+            "price": round(float(s.get('close', 0)), 2),
+            "reason": f"六维评分 {int(s['six_dim_score'])}/10",
+            "buy_zone": s['six_dim_details'].get('建议', '')
         })
 
     watchlist[TODAY] = entries
@@ -176,7 +178,10 @@ def generate_report(s_stocks):
 - 收盘价: ¥{price}
 - 涨跌幅: {change_pct}%
 - 六维评分: {score}/10
+- 涨跌幅: {change_pct}%
+- 六维评分: {score}/10
 - 得分详情: {details}
+- 建议低吸: {details.get('建议', '无')}
 
 **撰写要求**:
 1.  **严禁输出 JSON** 或 代码块。只输出易读的 Markdown 文本。
@@ -196,6 +201,7 @@ def generate_report(s_stocks):
 ### {i+1}. {name} ({code}) - 评分: {score}
 
 **📈 市场表现**: 现价 ¥{price:.2f} ({change_pct:+.2f}%)
+**🎯 操作建议**: {details.get('建议', '无')}
 
 {text}
 
