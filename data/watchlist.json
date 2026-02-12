@@ -1,4 +1,213 @@
 {
+  "2026-02-12": [
+    {
+      "code": "000600",
+      "name": "建投能源",
+      "score": 9,
+      "change_pct": 4.6,
+      "price": 8.86,
+      "reason": "六维评分 9/10",
+      "buy_zone": "建议 8.56 以下低吸"
+    },
+    {
+      "code": "000601",
+      "name": "GuangDong ShaoNeng G",
+      "score": 9,
+      "change_pct": 1.93,
+      "price": 5.27,
+      "reason": "六维评分 9/10",
+      "buy_zone": "建议 5.18 以下低吸"
+    },
+    {
+      "code": "000811",
+      "name": "冰轮环境",
+      "score": 9,
+      "change_pct": 4.63,
+      "price": 18.31,
+      "reason": "六维评分 9/10",
+      "buy_zone": "建议 17.61 以下低吸"
+    },
+    {
+      "code": "000967",
+      "name": "盈峰环境",
+      "score": 9,
+      "change_pct": 3.01,
+      "price": 7.53,
+      "reason": "六维评分 9/10",
+      "buy_zone": "建议 7.29 以下低吸"
+    },
+    {
+      "code": "000962",
+      "name": "东方钽业",
+      "score": 9,
+      "change_pct": 9.99,
+      "price": 48.99,
+      "reason": "六维评分 9/10",
+      "buy_zone": "建议 43.65 以下低吸"
+    },
+    {
+      "code": "300811",
+      "name": "铂科新材",
+      "score": 9,
+      "change_pct": 6.43,
+      "price": 79.45,
+      "reason": "六维评分 9/10",
+      "buy_zone": "建议 75.35 以下低吸"
+    },
+    {
+      "code": "600026",
+      "name": "中远海能",
+      "score": 9,
+      "change_pct": 9.98,
+      "price": 18.73,
+      "reason": "六维评分 9/10",
+      "buy_zone": "建议 17.06 以下低吸"
+    },
+    {
+      "code": "603688",
+      "name": "石英股份",
+      "score": 9,
+      "change_pct": 10.01,
+      "price": 47.47,
+      "reason": "六维评分 9/10",
+      "buy_zone": "建议 43.11 以下低吸"
+    },
+    {
+      "code": "688060",
+      "name": "云涌科技",
+      "score": 9,
+      "change_pct": 3.32,
+      "price": 49.73,
+      "reason": "六维评分 9/10",
+      "buy_zone": "建议 48.50 以下低吸"
+    },
+    {
+      "code": "000338",
+      "name": "潍柴动力",
+      "score": 8,
+      "change_pct": 8.09,
+      "price": 28.07,
+      "reason": "六维评分 8/10",
+      "buy_zone": "建议 25.89 以下低吸"
+    },
+    {
+      "code": "000628",
+      "name": "高新发展",
+      "score": 8,
+      "change_pct": 10.01,
+      "price": 55.85,
+      "reason": "六维评分 8/10",
+      "buy_zone": "建议 50.99 以下低吸"
+    },
+    {
+      "code": "000682",
+      "name": "东方电子",
+      "score": 8,
+      "change_pct": 4.45,
+      "price": 14.07,
+      "reason": "六维评分 8/10",
+      "buy_zone": "建议 13.46 以下低吸"
+    },
+    {
+      "code": "000712",
+      "name": "锦龙股份",
+      "score": 8,
+      "change_pct": 2.3,
+      "price": 12.92,
+      "reason": "六维评分 8/10",
+      "buy_zone": "建议 12.58 以下低吸"
+    },
+    {
+      "code": "000833",
+      "name": "粤桂股份",
+      "score": 8,
+      "change_pct": 9.99,
+      "price": 22.46,
+      "reason": "六维评分 8/10",
+      "buy_zone": "建议 20.28 以下低吸"
+    },
+    {
+      "code": "000875",
+      "name": "电投绿能",
+      "score": 8,
+      "change_pct": 6.24,
+      "price": 6.98,
+      "reason": "六维评分 8/10",
+      "buy_zone": "建议 6.80 以下低吸"
+    },
+    {
+      "code": "000887",
+      "name": "中鼎股份",
+      "score": 8,
+      "change_pct": 2.1,
+      "price": 21.4,
+      "reason": "六维评分 8/10",
+      "buy_zone": "建议 21.04 以下低吸"
+    },
+    {
+      "code": "000935",
+      "name": "四川双马",
+      "score": 8,
+      "change_pct": 3.58,
+      "price": 28.9,
+      "reason": "六维评分 8/10",
+      "buy_zone": "建议 27.92 以下低吸"
+    },
+    {
+      "code": "000977",
+      "name": "浪潮信息",
+      "score": 8,
+      "change_pct": 4.33,
+      "price": 64.77,
+      "reason": "六维评分 8/10",
+      "buy_zone": "建议 61.75 以下低吸"
+    },
+    {
+      "code": "000938",
+      "name": "紫光股份",
+      "score": 8,
+      "change_pct": 1.95,
+      "price": 25.62,
+      "reason": "六维评分 8/10",
+      "buy_zone": "建议 25.11 以下低吸"
+    },
+    {
+      "code": "000970",
+      "name": "中科三环",
+      "score": 8,
+      "change_pct": 2.26,
+      "price": 14.45,
+      "reason": "六维评分 8/10",
+      "buy_zone": "建议 13.92 以下低吸"
+    },
+    {
+      "code": "002008",
+      "name": "大族激光",
+      "score": 8,
+      "change_pct": 6.69,
+      "price": 53.11,
+      "reason": "六维评分 8/10",
+      "buy_zone": "建议 50.28 以下低吸"
+    },
+    {
+      "code": "603682",
+      "name": "锦和商管",
+      "score": 8,
+      "change_pct": 1.29,
+      "price": 7.83,
+      "reason": "六维评分 8/10",
+      "buy_zone": "建议 7.50 以下低吸"
+    },
+    {
+      "code": "688370",
+      "name": "丛麟科技",
+      "score": 8,
+      "change_pct": 0.4,
+      "price": 30.47,
+      "reason": "六维评分 8/10",
+      "buy_zone": "建议 30.38 以下低吸"
+    }
+  ],
   "2026-02-11": [
     {
       "code": "300165",
